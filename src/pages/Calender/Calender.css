@@ -1,0 +1,294 @@
+.standard{
+  width: 100%;
+  height: 812px;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+}
+
+.calendar-header-part{
+  display: flex;
+  justify-content: baseline;
+}
+
+.calendar-text-part{
+  font-size: 18px;
+  margin-top: 5px;
+  margin-left: 145px;
+  padding-right: 120px;
+}
+
+.calendar-search-part{
+  font-size: 25px;
+  margin-top: 5px;
+  color: gray;
+  cursor: pointer;
+}
+
+.line{
+  border: 1px solid #D5D5D5;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  width: 350px;
+  padding-top: 100px;
+  margin-left: 10px;
+}
+
+.music-recommend-part{
+  box-sizing: border-box;
+  border: 1.5px solid #000000;
+  width: 353px;
+  height: 250px;
+  margin-top: 30px;
+  border-radius: 10px;
+  margin-left: 12px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.emotion-tag {
+  padding: 5px 10px;
+  background-color: #404040;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  height: 20px;
+  width: 40px;
+  text-align: center;
+}
+
+.music-part{
+  box-sizing: border-box;
+  border-top: 1px solid #C5C5C5;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #C5C5C5;
+  margin-top: 10px;
+  padding-bottom: 5px;
+}
+
+.music-part-img1{
+  box-sizing: border-box;
+  background-color: #D9D9D9;
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.music-part-flex{
+  display: flex;
+  justify-content: baseline;
+}
+
+.music-title-text{
+  margin-left: 10px;
+  margin-top: 5px;
+  line-height: 30px;
+}
+
+.music-playbut{
+  margin-top: 23px;
+  margin-left: 150px;
+  cursor: pointer;
+}
+
+.diary-text{
+  font-size: 13px;
+  margin-top: 25px;
+  border-bottom: 1px solid #C5C5C5;
+  padding-bottom: 20px;
+  margin-left: 2px;
+}
+
+.diary-date{
+  color: #3C3C4399;
+  font-size: 12px;
+  margin-top: 8px;
+  margin-left: 2px;
+}
+
+.plusbutton{
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  width: 70px;
+  height: 70px;
+  margin-top: 40px;
+  border-radius: 100px;
+  border: 1px solid white;
+  font-size: 50px;
+  color: #3C3C4399;
+  margin-left: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+/* ----------------------------------------------- */
+
+.calendar-part{
+  margin-top: 30px;
+  margin-left: 12px;
+  margin-bottom: -75px;
+}
+
+/* 년-월 */
+.react-calendar__navigation__label > span {
+  color: #3C3C43;
+  font-family: SUIT Variable;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 140%;
+}
+
+.react-calendar__navigation button:enabled:hover{
+  color: #171717;
+    width: 15px;
+    background-color: #171717;
+    border-radius: 100px;
+}
+
+/* 요일 */
+.react-calendar__month-view__weekdays__weekday{
+  color: #3C3C434D;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #3C3C434D;
+  font-size: 13px;
+  font-weight: bold;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+}
+
+/* 이번 달 일자 */
+.react-calendar__tile{
+  color: #3C3C43;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  height: 44px;
+  width: 44px;
+}
+
+/* hover, focus, 선택됐을 시 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus
+ {
+  background: black; /* theme.color.black 대신 직접 색상 사용 */
+  border-radius: 100px;
+  height: 44px;
+  width: 44px;
+}
+
+.standard .react-calendar__tile--active {
+  background-color: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+  color: white; /* 글자색을 검정으로 설정 */
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 100px;
+}
+
+/* 저번 달 & 다음 달 일자 */
+.react-calendar__month-view__days__day--neighboringMonth{
+  color: gray;
+  font-size: 18px;
+  font-weight: bold;
+  width: 44px;
+  height: 44px;
+}
+
+
+/* 오늘 날짜 */
+.standard .react-calendar__tile--now {
+  background: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+  color: white; /* 글자색을 검정으로 설정 */
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 100px;
+  height: 44px;
+  width: 44px;
+}
+
+.standard .react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  color: white;
+  background: #3C3C43;
+  height: 44px;
+  width: 44px;
+}
+
+.react-calendar__tile--hasActive {
+  background: #3C3C43;
+  border-radius: 100px;
+  height: 44px;
+  width: 44px;
+  color: white;
+}
+
+.standard .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus{
+  background: #3C3C43;
+  border-radius: 100px;
+  height: 44px;
+  width: 44px;
+  color: white;
+}
+
+  /* 일정 있는 날 표시 점 */
+  .dot {
+    height: 8px;
+    width: 8px;
+    background-color: #3C3C43; /* 기본 색상 */
+    border-radius: 100%;
+    text-align: center;
+    margin-top: 3px;
+}
+
+/* 토,일 색 바꾸기 */
+.react-calendar__tile.saturday {
+  color: #3C3C43;
+}
+
+.react-calendar__tile.sunday {
+  color: #3C3C43;
+}
+
+/* 클릭 시 색상 흰색으로 변경 */
+.react-calendar__tile.saturday:focus, 
+.react-calendar__tile.sunday:focus,
+.react-calendar__tile.saturday.active, 
+.react-calendar__tile.sunday.active {
+  color: white; /* 클릭 시 색상 흰색 */
+}
+
+   /* 선택된 날짜 스타일 */
+  .standard .react-calendar__tile--active:hover {
+    background: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+    color: white; /* 글자색을 검정으로 설정 */
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 100px;
+    height: 40px;
+  }
+
+  /* 날짜에 대한 호버 스타일 */
+  .standard .react-calendar__tile:hover {
+    background: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+    color: white; /* 글자색을 검정으로 설정 */
+  }
