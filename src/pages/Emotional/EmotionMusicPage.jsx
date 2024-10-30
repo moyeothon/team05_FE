@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react"
 import Header from "../../components/Header"
 import AIBtn from "../../components/Emotional/AIBtn"
@@ -21,7 +20,9 @@ const DiaryContent = ({ diaryText }) => {
 
 const MusicItem = ({ track, isSelected, onSelect }) => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     const audioRef = useRef(null);
+    const optionsRef = useRef(null);
 
     const togglePlay = () => {
         if (audioRef.current) {
@@ -34,11 +35,25 @@ const MusicItem = ({ track, isSelected, onSelect }) => {
         }
     };
 
-    // 오디오 재생이 끝났을 때 상태 업데이트
+    // 오디오 재생이 끝났을 때 ���태 업데이트
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.onended = () => setIsPlaying(false);
         }
+    }, []);
+
+    // 외부 클릭 감지를 위한 useEffect
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+                setShowOptions(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, []);
 
     return (
@@ -67,14 +82,31 @@ const MusicItem = ({ track, isSelected, onSelect }) => {
                         />
                     </button>
                 )}
-                <a 
-                    href={track.external_urls.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="options-button"
-                >
-                    <img src="/more_options.svg" alt="스포티파이에서 열기" />
-                </a>
+                <div className="options-container" ref={optionsRef}>
+                    <button 
+                        className="options-button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setShowOptions(!showOptions);
+                        }}
+                    >
+                        <img src="/more_options.svg" alt="더보기" />
+                    </button>
+                    {showOptions && (
+                        <div className="options-popup">
+                            <button 
+                                className="option-item spotify-link"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    window.open(track.external_urls.spotify, '_blank'); // 스포티파이 링크 열기
+                                    setShowOptions(false);
+                                }}
+                            >
+                                스포티파이에서 듣기
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -254,7 +286,7 @@ const Todays = ({ diaryText }) => {
 
 function EmotionMusicPage() {
 
-    const [diaryText, setDiaryText] = useState(`오늘은 아침부터 왠지 모르게 설렘이 가득한 하루였다. 눈을 뜨자마자 창문으로 들어오는 햇살이 참 따스해서 기분이 좋아졌고, 그 느낌을 담아 하루를 시작했다. 출근길에는 좋아하는 노래를 듣고, 간간히 스쳐가는 가을바람에 행복이 묻어나는 듯했다.
+    const [diaryText, setDiaryText] = useState(`오늘은 아침부터 왠지 모르게 설렘이 가득한 하루였다. 눈을 뜨자마자 창문으로 들어오는 햇살이 참 따스해서 기분이 좋아졌고, 그 느낌을 담아 하루를 시작했다. 출근길에는 좋아하는 노래를 듣고, 간간히 스쳐가는 가을 바람에 행복이 묻어나는 듯했다.
 점심때는 동료들과 한껏 웃으며 시간을 보냈다. 웃음소리가 사무실을 가득 채우는 순간들이 참 소중하다는 걸 느꼈다. 오후 내내 마음이 기쁘고 가볍게 날아다니는 기분이 들었다.`);
 
     return (

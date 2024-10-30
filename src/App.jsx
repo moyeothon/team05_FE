@@ -4,14 +4,14 @@ import './App.css'
 // import Writing from './pages/Writing/Writing'
 import Calendar from './pages/Calender/Calender'
 // import Start from './pages/StartApp'
-// import EmotionMusicPage from './pages/Emotional/EmotionMusicPage'
+import EmotionMusicPage from './pages/Emotional/EmotionMusicPage'
 
 function App() {
   return (
     <>
-      {/* <EmotionMusicPage/> */}
+      <EmotionMusicPage/>
       {/* <Start/> */}
-      <Calendar/>
+      {/* <Calendar/> */}
       {/* <Writing/> */}
     </>
   )

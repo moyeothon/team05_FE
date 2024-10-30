@@ -12,7 +12,6 @@ body {
 
 .emotion-music-page {
     width: 100%;
-
     height: 100vh;
     background-color: #F6F6F6;
     overflow: hidden;
@@ -50,7 +49,6 @@ body {
     margin-bottom: 16px;
     text-align: left;
     display: -webkit-box;
-
     -webkit-line-clamp: 9; /* 10줄까지만 표시 */
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -122,6 +120,7 @@ body {
     padding-bottom: 12px;
     border-bottom: 1px solid #E5E5E5;
     margin-bottom: 12px;
+
 }
 
 .todays-header img {
@@ -175,15 +174,19 @@ body {
 }
 
 .emotion-tag {
-    padding: 3px 12px;
+    padding: 10px 12px;
     background-color: #ffffff;
     border-radius: 16px;
     border: 1px solid #F47220;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     color: #F47220;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     width: fit-content;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    height: 28px;
 }
 
 .music-item {
@@ -314,4 +317,58 @@ body {
 
 .music-recommendations::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.options-container {
+    position: relative;
+}
+
+.options-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+    min-width: 120px;
+}
+
+.option-item {
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.option-item:hover {
+    background-color: #f5f5f5;
+}
+
+.option-item.delete {
+    color: #ff4d4f;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.option-item.spotify-link {
+    color: #1DB954;  /* 스포티파이 브랜드 컬러 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.option-item.spotify-link:hover {
+    background-color: #f5f5f5;
 }
