@@ -1,7 +1,9 @@
 .standard{
-    width: 375px;
+    width: 100%;
     height: 812px;
-    border: 1px solid black;
+    border: 1px solid white;
+    background-color: white;
+    color: black;
 }
 
 .start-text{
@@ -22,4 +24,16 @@
 .img-part img{
     padding-top: 50px;
     padding-left: 50px;
+}
+
+.nickname-part{
+ box-sizing: border-box;
+ width: 215px;
+ height: 40px;
+ background: #F2F2F2;
+ margin-top: 50px;
+ border-radius: 10px;
+ border: 1px solid #BDBDBD;
+ margin-left: 85px;
+ text-align: center;
 }
