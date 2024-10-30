@@ -1,0 +1,25 @@
+.standard{
+    width: 375px;
+    height: 812px;
+    border: 1px solid black;
+}
+
+.start-text{
+    margin-top: 200px;
+    font-size: 26px;
+}
+
+.img-part{
+    width: 137px;
+    height: 130px;
+    margin-top: 100px;
+    margin-left: 120px;
+    box-sizing: border-box;
+    border-radius: 100px;
+    background: #F2F2F2;
+}
+
+.img-part img{
+    padding-top: 50px;
+    padding-left: 50px;
+}
