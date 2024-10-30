@@ -12,6 +12,7 @@ body {
 
 .emotion-music-page {
     width: 100%;
+
     height: 100vh;
     background-color: #F6F6F6;
     overflow: hidden;
@@ -49,6 +50,7 @@ body {
     margin-bottom: 16px;
     text-align: left;
     display: -webkit-box;
+
     -webkit-line-clamp: 9; /* 10줄까지만 표시 */
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -120,7 +122,6 @@ body {
     padding-bottom: 12px;
     border-bottom: 1px solid #E5E5E5;
     margin-bottom: 12px;
-
 }
 
 .todays-header img {
