@@ -1,0 +1,77 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  position: relative;
+}
+
+.header-left {
+  position: absolute;
+  left: 52%;
+  transform: translateX(-48%);
+}
+
+.header-right {
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.header-left .date {
+  font-size: 17px;
+  font-weight: 600;
+  color: #3C3C43;
+  cursor: pointer;
+}
+
+.header-right .next {
+  font-size: 17px;
+  color: #3C3C4399;
+  cursor: pointer;
+}
+
+/* 모바일 화면 설정 */
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 12px 0;
+  }
+  
+  .header-content {
+    padding: 0 12px;
+  }
+  
+  .header-left .date {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  
+  .header-right .next {
+    font-size: 17px;
+  }
+}
+
+/* 아주 작은 화면 설정 */
+@media screen and (max-width: 320px) {
+  .header-content {
+    padding: 0 8px;
+  }
+  
+  .header-left .date {
+    font-size: 12px;
+  }
+  
+  .header-right .next {
+    font-size: 12px;
+  }
+}
