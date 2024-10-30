@@ -1,0 +1,123 @@
+{
+    "기쁨": {
+      "target_valence": 0.8,
+      "target_energy": 0.7,
+      "target_tempo": 130
+    },
+    "감사": {
+      "target_valence": 0.7,
+      "target_energy": 0.5,
+      "target_tempo": 90
+    },
+    "만족": {
+      "target_valence": 0.6,
+      "target_energy": 0.4,
+      "target_tempo": 80
+    },
+    "사랑": {
+      "target_valence": 0.8,
+      "target_energy": 0.6,
+      "target_tempo": 110
+    },
+    "뿌듯함": {
+      "target_valence": 0.7,
+      "target_energy": 0.5,
+      "target_tempo": 100
+    },
+    "활력": {
+      "target_valence": 0.9,
+      "target_energy": 0.8,
+      "target_tempo": 140
+    },
+    "여유": {
+      "target_valence": 0.5,
+      "target_energy": 0.3,
+      "target_tempo": 70
+    },
+    "기대감": {
+      "target_valence": 0.7,
+      "target_energy": 0.6,
+      "target_tempo": 120
+    },
+    "슬픔": {
+      "target_valence": 0.2,
+      "target_energy": 0.2,
+      "target_tempo": 60
+    },
+    "외로움": {
+      "target_valence": 0.3,
+      "target_energy": 0.3,
+      "target_tempo": 65
+    },
+    "아쉬움": {
+      "target_valence": 0.4,
+      "target_energy": 0.3,
+      "target_tempo": 75
+    },
+    "후회": {
+      "target_valence": 0.2,
+      "target_energy": 0.3,
+      "target_tempo": 70
+    },
+    "불안": {
+      "target_valence": 0.3,
+      "target_energy": 0.6,
+      "target_tempo": 120
+    },
+    "피로": {
+      "target_valence": 0.2,
+      "target_energy": 0.2,
+      "target_tempo": 50
+    },
+    "실망": {
+      "target_valence": 0.2,
+      "target_energy": 0.3,
+      "target_tempo": 60
+    },
+    "서운함": {
+      "target_valence": 0.3,
+      "target_energy": 0.4,
+      "target_tempo": 65
+    },
+    "혼란": {
+      "target_valence": 0.4,
+      "target_energy": 0.5,
+      "target_tempo": 100
+    },
+    "놀람": {
+      "target_valence": 0.6,
+      "target_energy": 0.7,
+      "target_tempo": 130
+    },
+    "고민": {
+      "target_valence": 0.3,
+      "target_energy": 0.4,
+      "target_tempo": 80
+    },
+    "설렘": {
+      "target_valence": 0.8,
+      "target_energy": 0.6,
+      "target_tempo": 120
+    },
+    "부담": {
+      "target_valence": 0.4,
+      "target_energy": 0.5,
+      "target_tempo": 100
+    },
+    "의심": {
+      "target_valence": 0.3,
+      "target_energy": 0.4,
+      "target_tempo": 90
+    },
+    "두려움": {
+      "target_valence": 0.2,
+      "target_energy": 0.6,
+      "target_tempo": 110
+    },
+    "위안": {
+      "target_valence": 0.5,
+      "target_energy": 0.3,
+      "target_tempo": 70
+    }
+  }
+  
