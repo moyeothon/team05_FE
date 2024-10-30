@@ -19,23 +19,25 @@
 
 .header-left {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 52%;
+  transform: translateX(-48%);
 }
 
 .header-right {
   margin-left: auto;
+  margin-right: 12px;
 }
 
 .header-left .date {
-  font-size: 14px;
-  color: #333;
+  font-size: 17px;
+  font-weight: 600;
+  color: #3C3C43;
   cursor: pointer;
 }
 
 .header-right .next {
-  font-size: 14px;
-  color: #666;
+  font-size: 17px;
+  color: #3C3C4399;
   cursor: pointer;
 }
 
@@ -50,11 +52,12 @@
   }
   
   .header-left .date {
-    font-size: 13px;
+    font-size: 17px;
+    font-weight: 600;
   }
   
   .header-right .next {
-    font-size: 13px;
+    font-size: 17px;
   }
 }
 

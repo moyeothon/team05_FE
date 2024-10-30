@@ -1,0 +1,27 @@
+.ai-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #FF7F50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ai-button:hover {
+    background-color: #FF6B3D;
+}
+
+.ai-button:active {
+    background-color: #FF5722;
+}
+
+@media screen and (max-width: 480px) {
+    .ai-button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+} 
