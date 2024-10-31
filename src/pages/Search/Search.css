@@ -1,0 +1,60 @@
+.input-part {
+    margin-top: 5px;
+    width: 100%;
+    height: 812px;
+    font-size: 20px;
+    display: flex; /* 플렉스박스로 정렬 */
+    padding-top: 5px
+}
+
+.back-Arrow {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #3C3C43;
+    border-top: 2px solid #3C3C43;
+    transform: rotate(-135deg);
+    margin-left: 10px;
+    margin-top: 11px;
+}
+
+.search-icon{
+    margin-left: 15px;
+}
+
+.input-container {
+    position: relative;
+    width: 100%; /* 부모 요소 너비에 따라 확장 */
+    max-width: 300px; /* 최대 너비 설정 */
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.5%; /* input 내부에서 상대적 위치 */
+    top: 2.1%;
+    transform: translateY(-50%);
+    color: #767680;
+    cursor: pointer;
+}
+
+.input-container input {
+    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+    padding-left: 10%; /* 아이콘과 텍스트 사이 여백 */
+    height: 2em;
+    border-radius: 5px;
+    outline: none;
+    background-color: #7676801F;
+    border: none;
+}
+
+.input-part input {
+    outline: none;
+    background-color: #7676801F;
+    border-radius: 5px;
+    width: 240px;
+    height: 30px;
+    margin-left: 10px; /* 화살표와 간격 조절 */
+}
+
+.input-part input::placeholder {
+    text-indent: 10px;
+}

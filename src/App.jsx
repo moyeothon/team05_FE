@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import './App.css'
 
-// import Writing from './pages/Writing/Writing'
+// import Search from './pages/Search/Search'
+import Writing from './pages/Writing/Writing'
 // import Calendar from './pages/Calender/Calender'
-import Start from './pages/StartApp'
+// import Start from './pages/StartApp'
 // import EmotionMusicPage from './pages/Emotional/EmotionMusicPage'
 
 function App() {
   return (
     <>
       {/* <EmotionMusicPage/> */}
-      <Start/>
+      {/* <Start/> */}
       {/* <Calendar/> */}
-      {/* <Writing/> */}
+      <Writing/>
+      {/* <Search/> */}
     </>
   )
 }
