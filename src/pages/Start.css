@@ -8,32 +8,50 @@
 
 .start-text{
     margin-top: 200px;
-    font-size: 26px;
+    font-size: 22px;
+    color: #2D2D2D;
+    margin-left: 30px;
 }
+
+.start-text span{
+    font-weight: bold;
+}
+
+/* Rectangle 386 */
+.start-marking{
+    width: 105px;
+    height: 22px;
+    background: rgba(244, 114, 32, 0.2);
+    margin-left: 90px;
+    margin-top: -13px;
+}
+
 
 .img-part{
     width: 137px;
     height: 130px;
-    margin-top: 100px;
-    margin-left: 120px;
+    margin-top: 50px;
+    margin-left: 100px;
     box-sizing: border-box;
     border-radius: 100px;
-    background: #F2F2F2;
 }
 
 .img-part img{
-    padding-top: 50px;
-    padding-left: 50px;
+    width: 150px;
 }
 
 .nickname-part{
  box-sizing: border-box;
  width: 215px;
- height: 40px;
- background: #F2F2F2;
- margin-top: 50px;
+ height: 37px;
+ background: #F472201A;
+ margin-top: 10px;
  border-radius: 10px;
- border: 1px solid #BDBDBD;
- margin-left: 85px;
- text-align: center;
+ border: 1px solid #F47220;
+ margin-left: 70px;
+}
+
+.nickname-part::placeholder{
+    color: #F47220;
+    text-indent: 15px;
 }
