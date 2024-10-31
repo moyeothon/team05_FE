@@ -5,7 +5,7 @@ import './DiarySection.css';
 const DiarySection = ({ value, playbutton }) => {
     return (
         <div className='diary-section'>
-            <div className="emotion-tags">
+            <div className="emotion-tags-2">
                 <span className="emotion-tag">#행복</span>
                 <span className="emotion-tag">#설렘</span>
                 <span className="emotion-tag">#기쁨</span>

@@ -3,6 +3,7 @@ import Header from "../../components/Header"
 import AIBtn from "../../components/Emotional/AIBtn"
 import axios from 'axios';
 import emotions from '../../assets/emotions.json';
+import { useLocation } from 'react-router-dom';
 
 import "./EmotionMusicPage.css"
 
@@ -208,7 +209,7 @@ const Todays = ({ diaryText }) => {
                     messages: [
                         {
                             role: 'user',
-                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 3가지를 골라 출력해줘 "${text}"`,
+                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 3가지를 골라 ��력해줘 "${text}"`,
                         }
                     ],
                     max_tokens: 150,
@@ -411,9 +412,10 @@ const Todays = ({ diaryText }) => {
 }
 
 function EmotionMusicPage() {
-
-    const [diaryText, setDiaryText] = useState(`오늘은 아침부터 왠지 모르게 설렘이 가득한 하루였다. 눈을 뜨자마자 창문으로 들어오는 햇살이 참 따스해서 기분이 좋아졌고, 그 느낌을 담아 하루를 시작했다. 출근길에는 좋아하는 노래를 듣고, 간간히 스쳐가는 가을 바람에 행복이 묻어나는 듯했다.
-점심때는 동료들과 한껏 웃으며 시간을 보냈다. 웃음소리가 사무실을 가득 채우는 순간들이 참 소중하다는 걸 느꼈다. 오후 내내 마음이 기쁘고 가볍게 날아다니는 기분이 들었다.`);
+    const location = useLocation();
+    const [diaryText, setDiaryText] = useState(
+        location.state?.diaryText || `오늘은 아침부터...` // 기본 텍스트는 fallback으로 사용
+    );
 
     return (
         <div className="emotion-music-page">
