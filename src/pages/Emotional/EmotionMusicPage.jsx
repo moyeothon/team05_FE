@@ -35,7 +35,7 @@ const MusicItem = ({ track, isSelected, onSelect }) => {
         }
     };
 
-    // 오디오 재생이 끝났을 때 ���태 업데이트
+    // 오디오 재생이 끝났을 때 상태 업데이트
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.onended = () => setIsPlaying(false);
@@ -112,12 +112,89 @@ const MusicItem = ({ track, isSelected, onSelect }) => {
     );
 };
 
+const EmotionSelectModal = ({ isOpen, onClose, selectedEmotions, onEmotionsChange }) => {
+    const emotionGroups = [
+        {
+            emoji: "😊",
+            emotions: ["감사", "기쁨", "만족", "사랑", "뿌듯함", "활력", "여유", "기대감", "설렘"]
+        },
+        {
+            emoji: "😇",
+            emotions: ["외로움", "고민", "부담", "놀람", "아쉬움", "피로", "위안"]
+        },
+        {
+            emoji: "😨",
+            emotions: ["후회", "슬픔", "불안", "의식", "두려움", "혼란", "실망", "서운함"]
+        }
+    ];
+
+    const [tempEmotions, setTempEmotions] = useState([]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setTempEmotions([...selectedEmotions]);
+        }
+    }, [isOpen, selectedEmotions]);
+
+    const handleEmotionToggle = (emotion) => {
+        if (tempEmotions.includes(emotion)) {
+            // 이미 선택된 감정이면 제거
+            setTempEmotions(tempEmotions.filter(e => e !== emotion));
+        } else if (tempEmotions.length < 5) {
+            // 선택되지 않은 감정이고 5개 미만이면 추가
+            setTempEmotions([...tempEmotions, emotion]);
+        }
+    };
+
+    const handleComplete = () => {
+        onEmotionsChange(tempEmotions); // 완료 버튼 클릭 시에만 부모 컴포넌트의 상태 업데이트
+        onClose();
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="emotion-modal-overlay" onClick={onClose}>
+            <div className="emotion-modal" onClick={e => e.stopPropagation()}>
+                <div className="modal-header">
+                    <h3>오늘의 감정</h3>
+                    <p>최대 5개</p>
+                    <button className="close-button" onClick={handleComplete}>완료</button>
+                </div>
+                <div className="emotion-groups">
+                    {emotionGroups.map((group, index) => (
+                        <div key={index} className="emotion-group">
+                            <div className="emotion-emoji">{group.emoji}</div>
+                            <div className="emotion-tags">
+                                {group.emotions.map((emotion, i) => {
+                                    const isSelected = tempEmotions.includes(emotion);
+                                    return (
+                                        <button
+                                            key={i}
+                                            className={`emotion-tag-button ${isSelected ? 'selected' : ''}`}
+                                            onClick={() => handleEmotionToggle(emotion)}
+                                            disabled={!isSelected && tempEmotions.length >= 5}
+                                        >
+                                            {emotion}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Todays = ({ diaryText }) => {
     const [analyzedEmotions, setAnalyzedEmotions] = useState([]);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [token, setToken] = useState(null);
     const [musicRecommendations, setMusicRecommendations] = useState({});
     const [selectedMusicId, setSelectedMusicId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const analyzeDiary = async (text) => {
         setIsAnalyzing(true);
@@ -165,7 +242,7 @@ const Todays = ({ diaryText }) => {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Basic ' + btoa(
-                        `${import.meta.env.VITE_SPOTIFY_CLIENT_ID}:${import.meta.env.VITE_SPOTIFY_CLIENT_SECRET}`
+                        `${import.meta.env.VITE_SPOTIFY_CLIENT_ID_2}:${import.meta.env.VITE_SPOTIFY_CLIENT_SECRET_2}`
                     )
                 },
                 body: 'grant_type=client_credentials'
@@ -177,7 +254,7 @@ const Todays = ({ diaryText }) => {
     }, []);
 
     useEffect(() => {
-        const getMusicRecommendations = async (emotion) => {
+        const getMusicRecommendations = async (emotion, retryCount = 0) => {
             if (!token || !emotions[emotion]) return;
 
             const params = {
@@ -200,19 +277,56 @@ const Todays = ({ diaryText }) => {
                         }
                     }
                 );
+
+                // response 상태 확인
+                if (response.status === 429) {
+                    const retryAfter = response.headers.get('Retry-After') || '30'; // 기본값 30초
+                    console.log('전체 응답 헤더:', Object.fromEntries(response.headers));
+                    console.log(`Rate limit exceeded. Retry-After: ${retryAfter}초`);
+                    
+                    // 숫자로 변환하여 사용
+                    const waitTime = parseInt(retryAfter, 10) * 1000; // 밀리초 단위로 변환
+                    console.log(`대기 시간: ${waitTime/1000}초`);
+                    
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    return getMusicRecommendations(emotion, retryCount + 1);
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const data = await response.json();
-                setMusicRecommendations(prev => ({
-                    ...prev,
-                    [emotion]: data.tracks[0]
-                }));
+                if (data.tracks && data.tracks[0]) {
+                    setMusicRecommendations(prev => ({
+                        ...prev,
+                        [emotion]: data.tracks[0]
+                    }));
+                }
             } catch (error) {
                 console.error('음악 추천 중 오류:', error);
+                if (retryCount < 3) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    return getMusicRecommendations(emotion, retryCount + 1);
+                }
             }
         };
 
-        analyzedEmotions.forEach(emotion => {
-            getMusicRecommendations(emotion);
-        });
+        // 순차적으로 API 요청 실행
+        const fetchAllRecommendations = async () => {
+            for (const emotion of analyzedEmotions) {
+                // 이미 추천곡이 있는 경우 스킵
+                if (!musicRecommendations[emotion]) {
+                    await getMusicRecommendations(emotion);
+                    // 각 요청 사이에 1초 간격
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+            }
+        };
+
+        if (analyzedEmotions.length > 0 && token) {
+            fetchAllRecommendations();
+        }
     }, [analyzedEmotions, token]);
 
     useEffect(() => {
@@ -220,6 +334,10 @@ const Todays = ({ diaryText }) => {
             setSelectedMusicId(musicRecommendations[analyzedEmotions[0]].id);
         }
     }, [analyzedEmotions, musicRecommendations]);
+
+    const handleEmotionsChange = (newEmotions) => {
+        setAnalyzedEmotions(newEmotions);
+    };
 
     return (
         <div className="todays-section">
@@ -245,9 +363,11 @@ const Todays = ({ diaryText }) => {
                                 ))}
                             </div>
                         )}
-                        <button className="plus-button">
+                        <button 
+                            className="plus-button"
+                            onClick={() => setIsModalOpen(true)}
+                        >
                             <img src="/emotion_add_button.svg" alt="감정 추가" />
-                            <span>최대 5개</span>
                         </button>
                     </div>
                 </div>
@@ -280,6 +400,12 @@ const Todays = ({ diaryText }) => {
                     )}
                 </div>
             </div>
+            <EmotionSelectModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                selectedEmotions={analyzedEmotions}
+                onEmotionsChange={handleEmotionsChange}
+            />
         </div>
     )
 }
