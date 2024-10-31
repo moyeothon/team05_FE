@@ -4,6 +4,7 @@
   border: 1px solid white;
   background-color: white;
   color: black;
+  padding-left: 5px;
 }
 
 .calendar-header-part{
@@ -303,3 +304,6 @@
     background: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
     color: white; /* 글자색을 검정으로 설정 */
   }
+
+
+  /* ----------------------반응형------------------------- */
