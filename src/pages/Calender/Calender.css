@@ -37,7 +37,8 @@
 
 .music-recommend-part{
   box-sizing: border-box;
-  border: 1.5px solid #000000;
+  box-shadow: 0px 4px 6px #00000026;
+  border: 1.5px solid white;
   width: 353px;
   height: 250px;
   margin-top: 30px;
@@ -48,21 +49,25 @@
 .tags {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
-  margin-left: 15px;
+  margin-top: -15px;
+  padding-bottom: 10px;
+  box-shadow: 0px 4px 6px #00000026;
 }
 
 .emotion-tag {
   padding: 5px 10px;
-  background-color: #404040;
-  border-radius: 5px;
-  border: none;
+  background-color: white;
+  border-radius: 100px;
+  border: 1px solid #F47220;
   cursor: pointer;
-  color: white;
-  height: 20px;
-  width: 40px;
+  color: #F47220;
+  height: 15px;
+  width: 35px;
   text-align: center;
+  font-size: 12px;
+  box-shadow: 0px 4px 6px #00000026;
 }
+
 
 .music-part{
   box-sizing: border-box;
@@ -72,6 +77,7 @@
   border-bottom: 1px solid #C5C5C5;
   margin-top: 10px;
   padding-bottom: 5px;
+  box-shadow: 0px 4px 6px #00000026;
 }
 
 .music-part-img1{
@@ -106,13 +112,17 @@
   border-bottom: 1px solid #C5C5C5;
   padding-bottom: 20px;
   margin-left: 2px;
+  box-shadow: 0px 4px 6px #00000026;
+  height: 60px;
+  color: #3C3C43;
 }
 
 .diary-date{
   color: #3C3C4399;
   font-size: 12px;
-  margin-top: 8px;
-  margin-left: 2px;
+  margin-top: 13px;
+  margin-left: 10px;
+  
 }
 
 .plusbutton{
@@ -122,14 +132,15 @@
   height: 70px;
   margin-top: 40px;
   border-radius: 100px;
-  border: 1px solid white;
+  border: 1px solid #F47220;
   font-size: 50px;
-  color: #3C3C4399;
+  color: white;
   margin-left: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background-color: #F47220;
 }
 
 
@@ -198,7 +209,7 @@
 }
 
 .standard .react-calendar__tile--active {
-  background-color: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+  background-color: #F47220; /* 배경색을 #3C3C43으로 변경 */
   color: white; /* 글자색을 검정으로 설정 */
   font-size: 18px;
   font-weight: bold;
@@ -217,7 +228,7 @@
 
 /* 오늘 날짜 */
 .standard .react-calendar__tile--now {
-  background: #3C3C43; /* 배경색을 #3C3C43으로 변경 */
+  background: #F47220; /* 배경색을 #3C3C43으로 변경 */
   color: white; /* 글자색을 검정으로 설정 */
   font-size: 18px;
   font-weight: bold;
@@ -229,13 +240,13 @@
 .standard .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   color: white;
-  background: #3C3C43;
+  background: #F47220;
   height: 44px;
   width: 44px;
 }
 
 .react-calendar__tile--hasActive {
-  background: #3C3C43;
+  background: #F47220;
   border-radius: 100px;
   height: 44px;
   width: 44px;
@@ -243,7 +254,7 @@
 }
 
 .standard .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus{
-  background: #3C3C43;
+  background: #F47220;
   border-radius: 100px;
   height: 44px;
   width: 44px;
@@ -254,7 +265,7 @@
   .dot {
     height: 8px;
     width: 8px;
-    background-color: #3C3C43; /* 기본 색상 */
+    background-color: #F47220; /* 기본 색상 */
     border-radius: 100%;
     text-align: center;
     margin-top: 3px;
