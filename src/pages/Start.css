@@ -1,57 +1,93 @@
-.standard{
+.start-container {
     width: 100%;
-    height: 812px;
-    border: 1px solid white;
+    min-height: 100vh;
     background-color: white;
-    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-.start-text{
-    margin-top: 200px;
+.start-content {
+    width: 100%;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 200px;
+}
+
+.start-text {
     font-size: 22px;
     color: #2D2D2D;
-    margin-left: 30px;
+    text-align: left;
+    width: 100%;
+    max-width: 320px;
+    position: relative;
+    margin-bottom: 50px;
 }
 
-.start-text span{
+.start-text span {
     font-weight: bold;
 }
 
-/* Rectangle 386 */
-.start-marking{
+.start-marking {
     width: 105px;
     height: 22px;
     background: rgba(244, 114, 32, 0.2);
-    margin-left: 90px;
-    margin-top: -13px;
+    position: absolute;
+    left: 90px;
+    bottom: 3px;
+    z-index: 0;
 }
 
-
-.img-part{
+.img-part {
     width: 137px;
     height: 130px;
-    margin-top: 50px;
-    margin-left: 100px;
-    box-sizing: border-box;
-    border-radius: 100px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.img-part img{
+.img-part img {
     width: 150px;
+    height: auto;
 }
 
-.nickname-part{
- box-sizing: border-box;
- width: 215px;
- height: 37px;
- background: #F472201A;
- margin-top: 10px;
- border-radius: 10px;
- border: 1px solid #F47220;
- margin-left: 70px;
+.nickname-part {
+    width: 100%;
+    max-width: 215px;
+    height: 37px;
+    background: #F472201A;
+    border-radius: 10px;
+    border: 1px solid #F47220;
+    padding: 0 15px;
 }
 
-.nickname-part::placeholder{
+.nickname-part::placeholder {
     color: #F47220;
-    text-indent: 15px;
+}
+
+/* 태블릿 화면 설정 */
+@media screen and (max-width: 768px) {
+    .start-text {
+        font-size: 20px;
+    }
+}
+
+/* 모바일 화면 설정 */
+@media screen and (max-width: 480px) {
+    .start-text {
+        font-size: 18px;
+    }
+    
+    .img-part {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .img-part img {
+        width: 130px;
+    }
 }

@@ -131,7 +131,7 @@ body {
 .todays-header h2 {
     font-size: 16px;
     color: #333;
-    font-weight: 500;
+    font-weight: 800;
 }
 
 .todays-buttons {
@@ -371,4 +371,106 @@ body {
 
 .option-item.spotify-link:hover {
     background-color: #f5f5f5;
+}
+
+.emotion-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.emotion-modal {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.modal-header p {
+    color: #F47220;
+    font-size: 14px;
+}
+
+.close-button {
+    padding: 8px 16px;
+    border: none;
+    background: #F47220;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.emotion-group {
+    margin-bottom: 24px;
+}
+
+.emotion-emoji {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.emotion-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.emotion-tag-button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: #333;
+}
+
+.emotion-tag-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.emotion-tag-button.selected {
+    background-color: #F47220;
+    color: white;
+    border-color: #F47220;
+}
+
+.emotion-tag-button.selected:hover {
+    background-color: #e56516;  /* 약간 어두운 색상으로 변경 */
+}
+
+.emotion-tag-button:not(.selected):hover:not(:disabled) {
+    border-color: #F47220;
+    color: #F47220;
+}
+
+.emotion-groups {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
 }
