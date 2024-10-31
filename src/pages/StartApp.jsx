@@ -1,16 +1,18 @@
 import React from 'react';
 import './Start.css';
+import logo from '../../src/assets/logo.png'
 
 const Start = () => {
   return (
     <div className='standard'>
       <div className='start-text'>
         닉네임을 입력하여 <br />
-        MUTE와 함께 하루를 기록해요!
+        <span>Mute</span>와 함께 하루를 기록해요!
+        <div className='start-marking'></div>
       </div>
 
       <div className='img-part'>
-        <img src="#" alt="" />
+        <img src={logo} alt="" style={{}}/>
       </div>
 
       <input
