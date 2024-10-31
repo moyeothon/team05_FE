@@ -12,16 +12,18 @@ body {
 
 .emotion-music-page {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #F6F6F6;
-    overflow-x: hidden; /* 가로 스크롤 방지 */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .diary-content-background {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 5px; /* 상단 패딩 조정 */
+    padding: 5px;
 }
 
 .diary-content-box {
@@ -47,10 +49,10 @@ body {
     margin-bottom: 16px;
     text-align: left;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* 10줄까지만 표시 */
+    -webkit-line-clamp: 9; /* 10줄까지만 표시 */
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis; /* 말줄임표 표시 */
+    text-overflow: ellipsis; /* 말줄임표 표 */
 }
 
 /* 태블릿 화면 설정 */
@@ -87,25 +89,28 @@ body {
     padding: 16px 17px;
     background-color: white;
     padding-left: 26px;
-    min-height: 59vh;
-    margin-top: -5px;
+    overflow: hidden;
 }
 
 .todays-content {
     width: 100%;
     max-width: 768px;
-    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .todays-item {
     background-color: transparent;
     box-shadow: none;
     padding: 0;
-    margin-bottom: 40px;
 }
 
 .todays-item.music {
-    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 40px;
 }
 
 .todays-header {
@@ -115,6 +120,7 @@ body {
     padding-bottom: 12px;
     border-bottom: 1px solid #E5E5E5;
     margin-bottom: 12px;
+
 }
 
 .todays-header img {
@@ -125,7 +131,7 @@ body {
 .todays-header h2 {
     font-size: 16px;
     color: #333;
-    font-weight: 500;
+    font-weight: 800;
 }
 
 .todays-buttons {
@@ -147,8 +153,8 @@ body {
 }
 
 .todays-buttons .plus-button img {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
 }
 
 @media screen and (max-width: 480px) {
@@ -160,4 +166,311 @@ body {
     .todays-header h2 {
         font-size: 16px;
     }
+}
+
+.emotion-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.emotion-tag {
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #F47220;
+    font-size: 14px;
+    font-weight: 400;
+    color: #F47220;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    height: 28px;
+}
+
+.music-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    border: 2px solid transparent; /* 테두리 추가 */
+    transition: all 0.2s ease; /* 부드러운 전환 효과 */
+}
+
+.music-item.selected {
+    border-color: #F47220;
+    background-color: #fff8f3;
+    box-shadow: 0 0 8px rgba(244, 114, 32, 0.2);
+}
+
+/* 선택된 상태일 때 제목 색상 변경 */
+.music-item.selected .song-title {
+    color: #F47220;
+}
+
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.album-cover {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.song-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.song-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.artist-name {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.play-button, .options-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-button img, .options-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.options-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.music-recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 8px;
+    overflow-y: auto;
+}
+
+.music-recommendation-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.music-empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.music-empty-state p {
+    margin: 0;
+}
+
+.music-recommendations::-webkit-scrollbar {
+    width: 4px;
+}
+
+.music-recommendations::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.music-recommendations::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.music-recommendations::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.options-container {
+    position: relative;
+}
+
+.options-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+    min-width: 120px;
+}
+
+.option-item {
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.option-item:hover {
+    background-color: #f5f5f5;
+}
+
+.option-item.delete {
+    color: #ff4d4f;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.option-item.spotify-link {
+    color: #1DB954;  /* 스포티파이 브랜드 컬러 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.option-item.spotify-link:hover {
+    background-color: #f5f5f5;
+}
+
+.emotion-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.emotion-modal {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.modal-header p {
+    color: #F47220;
+    font-size: 14px;
+}
+
+.close-button {
+    padding: 8px 16px;
+    border: none;
+    background: #F47220;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.emotion-group {
+    margin-bottom: 24px;
+}
+
+.emotion-emoji {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.emotion-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.emotion-tag-button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: #333;
+}
+
+.emotion-tag-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.emotion-tag-button.selected {
+    background-color: #F47220;
+    color: white;
+    border-color: #F47220;
+}
+
+.emotion-tag-button.selected:hover {
+    background-color: #e56516;  /* 약간 어두운 색상으로 변경 */
+}
+
+.emotion-tag-button:not(.selected):hover:not(:disabled) {
+    border-color: #F47220;
+    color: #F47220;
+}
+
+.emotion-groups {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
 }

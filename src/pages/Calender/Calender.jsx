@@ -24,71 +24,81 @@ const Calender = () => {
         setActiveDate(activeDate === formattedDate ? null : formattedDate);
     };
 
+    const tileContent = ({ date }) => {
+        // 여기에 점을 표시할 날짜들의 배열을 정의하거나 API에서 가져옵니다
+        const markedDates = ['2024-10-07', '2024-10-08', '2024-10-14', '2024-10-15', '2024-10-17', '2024-10-18', '2024-10-22', '2024-10-23', '2024-10-26', '2024-10-28', '2024-10-29'];
+        
+        // 날짜를 YYYY-MM-DD 형식으로 변환
+        const dateString = date.toISOString().split('T')[0];
+        
+        // 해당 날짜가 markedDates 배열에 있으면 점을 표시
+        if (markedDates.includes(dateString)) {
+            return <div className="dot"></div>;
+        }
+        
+        return null;
+    };
+
     return (
-        <div className='standard'>
-            <div className='calendar-header-part'>
-                <div className='calendar-text-part'>Calendar</div>
-                <div className='calendar-search-part'><IoIosSearch /></div>
-            </div>
-
-            <div className='calendar-part'>
-                <Calendar 
-                    onChange={onChange} 
-                    value={value} 
-                    onClickDay={handleTileClick}
-                    formatDay={(locale, date) => moment(date).format("D")}
-                    tileContent={({ date }) => (
-                        hasSchedule(date) ? <div className="dot"></div> : null
-                    )}
-                    tileClassName={({ date }) => {
-                        const dayOfWeek = date.getDay();
-                        const formattedDate = moment(date).format("YYYY-MM-DD");
-
-                        if (activeDate === formattedDate) {
-                            return (dayOfWeek === 0) ? 'sunday active' : (dayOfWeek === 6) ? 'saturday active' : '';
-                        }
-
-                        return (dayOfWeek === 0) ? 'sunday' : (dayOfWeek === 6) ? 'saturday' : '';
-                    }}
-                />
-            </div>
-
-            <div className='line'></div>
-
-            <div className='music-recommend-part'>
-                <div className="tags">
-                    <div className="emotion-tag">#행복</div>
-                    <div className="emotion-tag">#설렘</div>
-                    <div className="emotion-tag">#기쁨</div>
+        <div className='calendar-container'>
+            <div className='calendar-content'>
+                <div className='calendar-header'>
+                    <h2>Calendar</h2>
+                    <button className='search-button'>
+                        <IoIosSearch />
+                    </button>
                 </div>
 
+                <div className='calendar-section'>
+                    <Calendar 
+                        onChange={onChange} 
+                        value={value} 
+                        onClickDay={handleTileClick}
+                        formatDay={(locale, date) => moment(date).format("D")}
+                        tileContent={tileContent}
+                        tileClassName={({ date }) => {
+                            const dayOfWeek = date.getDay();
+                            const formattedDate = moment(date).format("YYYY-MM-DD");
+                            return `calendar-tile ${
+                                dayOfWeek === 0 ? 'sunday' : 
+                                dayOfWeek === 6 ? 'saturday' : ''
+                            } ${activeDate === formattedDate ? 'active' : ''}`;
+                        }}
+                    />
+                </div>
 
-                <div className='diary-text'>
-                    오늘은 아침부터 부쩍 차가워진 공기에 몸이 움츠러들었지만, 하늘이 맑아서...
-                </div>  
-                <div className='music-part'>
-                    <div className='music-part-flex'>
-                        <div className='music-part-img1'>
-                            <img src="#" alt="" />
-                        </div>
-                        <div className='music-title-text'>
-                            <span style={{fontSize: 18}}>노래제목</span> <br />
-                            <span style={{color: '#3C3C43', fontSize: 15}}>가수명</span>
-                        </div>
-                        <div className='music-playbut'>
-                            <img src={playbutton} alt="" style={{width: 17}} />
-                        </div>
+                <div className='diary-section'>
+                    <div className="emotion-tags">
+                        <span className="emotion-tag">#행복</span>
+                        <span className="emotion-tag">#설렘</span>
+                        <span className="emotion-tag">#기쁨</span>
                     </div>
-                </div>
-                <div className='diary-date text-gray-500 mt-4'>
-                    {moment(value).format("YYYY년 MM월 DD일")}
+
+                    <div className='diary-content'>
+                        <p>오늘은 아침부터 부쩍 차가워진 공기에 몸이 움츠러들었지만, 하늘이 맑아서...</p>
+                    </div>
+
+                    <div className='music-item'>
+                        <div className='music-info'>
+                            <div className='album-cover'></div>
+                            <div className='song-details'>
+                                <h3 className='song-title'>노래제목</h3>
+                                <p className='artist-name'>가수명</p>
+                            </div>
+                        </div>
+                        <button className='play-button'>
+                            <img src={playbutton} alt="재생" />
+                        </button>
+                    </div>
+
+                    <div className='diary-date'>
+                        {moment(value).format("YYYY년 MM월 DD일")}
+                    </div>
                 </div>
             </div>
 
             <button className='plusbutton'>
-                <div style={{cursor: 'pointer'}}>
-                    +
-                </div>
+                <img src="/Calender_add_icon.svg" alt="일정 추가" />
             </button>
         </div>
     );
