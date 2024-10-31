@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-const Header = ({ onNextClick }) => {
+const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
@@ -9,7 +9,7 @@ const Header = ({ onNextClick }) => {
           <span className="date">10월 29일 화요일 ▼</span>
         </div>
         <div className="header-right">
-          <span className="next" onClick={onNextClick}>다음</span> {/* "다음" 클릭 시 onNextClick 호출 */}
+          <span className="next">다음</span>
         </div>
       </div>
     </header>
