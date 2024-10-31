@@ -1,11 +1,14 @@
-import React from 'react'
-import './Search.css'
-import { CiSearch } from "react-icons/ci";
+import React, { useState } from 'react';
+import { CiSearch } from 'react-icons/ci';
+import moment from 'moment';
+import playbutton from '../../assets/playbutton.png';
+import './Search.css';
 
 const Search = () => {
-  return (
-    <div className='standard'>
+  const [value, onChange] = useState(new Date());
 
+  return (
+    <div className='search-container'>
       <div className='input-part'>
         <div className='back-Arrow'></div>
         <div className="input-container">
@@ -14,8 +17,36 @@ const Search = () => {
         </div>
       </div>
 
-    </div>
-  )
-}
+      <div className='diary-section'>
+          <div className="emotion-tags">
+              <span className="emotion-tag">#행복</span>
+              <span className="emotion-tag">#설렘</span>
+              <span className="emotion-tag">#기쁨</span>
+          </div>
 
-export default Search
+          <div className='diary-content'>
+              <p>오늘은 아침부터 부쩍 차가워진 공기에 몸이 움츠러들었지만, 하늘이 맑아서...</p>
+          </div>
+
+          <div className='music-item'>
+              <div className='music-info'>
+                  <div className='album-cover'></div>
+                  <div className='song-details'>
+                      <h3 className='song-title'>노래제목</h3>
+                      <p className='artist-name'>가수명</p>
+                  </div>
+              </div>
+              <button className='play-button'>
+                  <img src={playbutton} alt="재생" />
+              </button>
+          </div>
+
+          <div className='diary-date'>
+              {moment(value).format("YYYY년 MM월 DD일")}
+          </div>
+      </div>
+    </div>
+  );
+};
+
+export default Search;

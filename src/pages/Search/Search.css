@@ -1,20 +1,23 @@
-.input-part {
-    margin-top: 5px;
+.search-container {
     width: 100%;
-    height: 812px;
-    font-size: 20px;
-    display: flex; /* 플렉스박스로 정렬 */
-    padding-top: 5px
+    background-color: #F6F6F6;
+    padding: 10px 16px;
+  }
+
+.input-part {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .back-Arrow {
-    width: 12px;
-    height: 12px;
+    width: 17px;
+    height: 17px;
     border-right: 2px solid #3C3C43;
     border-top: 2px solid #3C3C43;
     transform: rotate(-135deg);
     margin-left: 10px;
-    margin-top: 11px;
+    margin-top: 5px;
 }
 
 .search-icon{
@@ -22,33 +25,31 @@
 }
 
 .input-container {
-    position: relative;
-    width: 100%; /* 부모 요소 너비에 따라 확장 */
-    max-width: 300px; /* 최대 너비 설정 */
-}
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #EFEFEF;
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
 
-.search-icon {
-    position: absolute;
-    left: 1.5%; /* input 내부에서 상대적 위치 */
-    top: 2.1%;
-    transform: translateY(-50%);
-    color: #767680;
-    cursor: pointer;
-}
+  .search-icon {
+    font-size: 20px;
+    color: #666;
+    margin-left: -5px;
+  }
 
-.input-container input {
-    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
-    padding-left: 10%; /* 아이콘과 텍스트 사이 여백 */
-    height: 2em;
-    border-radius: 5px;
-    outline: none;
-    background-color: #7676801F;
+  .input-container input {
     border: none;
-}
+    background: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+  }
 
 .input-part input {
     outline: none;
-    background-color: #7676801F;
     border-radius: 5px;
     width: 240px;
     height: 30px;
@@ -56,5 +57,126 @@
 }
 
 .input-part input::placeholder {
-    text-indent: 10px;
+    text-indent: 0px;
 }
+
+/* ----------------------------------------------------------------- */
+
+.diary-section {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 12px;
+  }
+  
+  .emotion-tags {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .emotion-tag {
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #F47220;
+    font-size: 14px;
+    font-weight: 400;
+    color: #F47220;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    height: 28px;
+  }
+  
+  .diary-content {
+    width: 100%;
+    text-align: left;
+  }
+  
+  .diary-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 16px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .music-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  
+  .music-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .album-cover {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    object-fit: cover;
+    background-color: #D9D9D9;
+  }
+  
+  .song-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .song-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+  }
+  
+  .artist-name {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .play-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .play-button img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .diary-date {
+    color: #3C3C4399;
+    font-size: 12px;
+    margin-top: 13px;
+    margin-left: 10px;
+  }
+
+  
