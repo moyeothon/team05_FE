@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ diaryText, selectedDate, onNext }) => {
+const Header = ({ diaryText, selectedDate, onNext, onComplete }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -11,6 +11,8 @@ const Header = ({ diaryText, selectedDate, onNext }) => {
       if (onNext()) {
         navigate('/emotion', { state: { diaryText, selectedDate } });
       }
+    } else if (location.pathname === '/emotion') {
+      onComplete && onComplete();
     }
   };
 
