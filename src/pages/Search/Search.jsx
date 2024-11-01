@@ -6,6 +6,41 @@ import './Search.css';
 
 const Search = () => {
   const [value, onChange] = useState(new Date());
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // 일기 목록
+  const diaryList = [
+    {
+      id: 1,
+      tags: ['행복', '설렘'],
+      content: '오늘은 아침부터 부쩍 차가워진 공기에 몸이 움츠러들었지만, 하늘이 맑아서...',
+      song: { title: '노래제목1', artist: '가수명1' },
+      date: new Date('2024-03-15')
+    },
+    {
+      id: 2,
+      tags: ['행복', '기쁨'],
+      content: '어렵다 어려워...',
+      song: { title: '노래제목2', artist: '가수명2' },
+      date: new Date('2024-03-14')
+    },
+    {
+      id: 3,
+      tags: ['설렘', '기쁨'],
+      content: '어려운데...',
+      song: { title: '노래제목3', artist: '가수명3' },
+      date: new Date('2024-03-13')
+    }
+  ];
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // 검색어와 일치하는 일기 
+  const filteredDiaries = diaryList.filter(diary => 
+    diary.tags.some(tag => tag.includes(searchTerm))
+  );
 
   return (
     <div className='search-container'>
@@ -13,38 +48,48 @@ const Search = () => {
         <div className='back-Arrow'></div>
         <div className="input-container">
             <CiSearch className="search-icon" />
-            <input placeholder="검색어를 입력하세요." />
+            <input 
+              placeholder="검색어를 입력하세요." 
+              value={searchTerm}
+              onChange={handleSearch}
+            />
         </div>
       </div>
 
-      <div className='diary-section'>
-          <div className="emotion-tags">
-              <span className="emotion-tag">#행복</span>
-              <span className="emotion-tag">#설렘</span>
-              <span className="emotion-tag">#기쁨</span>
-          </div>
+      {searchTerm !== '' && filteredDiaries.length > 0 && (
+        <div className='search-results'>
+          {filteredDiaries.map(diary => (
+            <div key={diary.id} className='diary-section'>
+              <div className="emotion-tags">
+                {diary.tags.map(tag => (
+                  <span key={tag} className="emotion-tag">#{tag}</span>
+                ))}
+              </div>
 
-          <div className='diary-content'>
-              <p>오늘은 아침부터 부쩍 차가워진 공기에 몸이 움츠러들었지만, 하늘이 맑아서...</p>
-          </div>
+              <div className='diary-content'>
+                <p>{diary.content}</p>
+              </div>
 
-          <div className='music-item'>
-              <div className='music-info'>
+              <div className='music-item'>
+                <div className='music-info'>
                   <div className='album-cover'></div>
                   <div className='song-details'>
-                      <h3 className='song-title'>노래제목</h3>
-                      <p className='artist-name'>가수명</p>
+                    <h3 className='song-title'>{diary.song.title}</h3>
+                    <p className='artist-name'>{diary.song.artist}</p>
                   </div>
+                </div>
+                <button className='play-button'>
+                  <img src={playbutton} alt="" />
+                </button>
               </div>
-              <button className='play-button'>
-                  <img src={playbutton} alt="재생" />
-              </button>
-          </div>
 
-          <div className='diary-date'>
-              {moment(value).format("YYYY년 MM월 DD일")}
-          </div>
-      </div>
+              <div className='diary-date'>
+                {moment(diary.date).format("YYYY년 MM월 DD일")}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
