@@ -313,7 +313,8 @@ const Todays = ({ diaryText }) => {
                                     <span className="emotion-tag">#{emotion}</span>
                                     {loadingStates[emotion] ? (
                                         <div className="loading-music">
-                                            음악 추천 중...
+                                            <div className="loading-spinner"></div>
+                                            <p className="loading-text">음악 추천 중...</p>
                                         </div>
                                     ) : (
                                         musicRecommendations[emotion] && 
