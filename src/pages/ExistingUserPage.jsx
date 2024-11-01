@@ -9,7 +9,7 @@ const ExistingUserPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (nickname.trim()) {
-      // 여기에 닉네임 확인 및 검증 로직 추가
+      // 여기에 닉네임 확인 및 검증 로직 추가1
       navigate('/calendar');
     }
   };
