@@ -44,12 +44,16 @@ const Calender = () => {
         });
     };
 
+    const handleSearchClick = () => {
+        navigate('/search');
+    };
+
     return (
         <div className='calendar-container'>
             <div className='calendar-content'>
                 <div className='calendar-header'>
                     <h2>MUTE</h2>
-                    <button className='search-button'>
+                    <button className='search-button' onClick={handleSearchClick}>
                         <IoIosSearch />
                     </button>
                 </div>
