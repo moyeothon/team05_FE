@@ -9,6 +9,7 @@ import Start from './pages/StartApp';
 import NewUserPage from './pages/NewUserPage';
 import ExistingUserPage from './pages/ExistingUserPage';
 import DiaryDetailPage from './pages/DiaryDetail/DiaryDetailPage';
+import Search from './pages/Search/Search';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/emotion" element={<EmotionMusicPage />} />
         <Route path="/calendar" element={<Calender />} />
         <Route path="/diary-detail" element={<DiaryDetailPage />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       <ToastContainer
         position="top-center"

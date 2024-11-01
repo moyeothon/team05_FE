@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CiSearch } from 'react-icons/ci';
 import moment from 'moment';
 import playbutton from '../../assets/playbutton.png';
@@ -7,6 +8,7 @@ import './Search.css';
 const Search = () => {
   const [value, onChange] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   // 일기 목록
   const diaryList = [
@@ -37,6 +39,10 @@ const Search = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleBack = () => {
+    navigate('/calendar');
+  };
+
   // 검색어와 일치하는 일기 
   const filteredDiaries = diaryList.filter(diary => 
     diary.tags.some(tag => tag.includes(searchTerm))
@@ -45,7 +51,7 @@ const Search = () => {
   return (
     <div className='search-container'>
       <div className='input-part'>
-        <div className='back-Arrow'></div>
+        <div className='back-Arrow' onClick={handleBack}></div>
         <div className="input-container">
             <CiSearch className="search-icon" />
             <input 
