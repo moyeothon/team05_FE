@@ -3,7 +3,7 @@ import Header from "../../components/Header"
 import AIBtn from "../../components/Emotional/AIBtn"
 import axios from 'axios';
 import emotions from '../../assets/emotions.json';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MusicItem from '../../components/Music/MusicItem';
 import "./EmotionMusicPage.css"
 
@@ -95,12 +95,10 @@ const EmotionSelectModal = ({ isOpen, onClose, selectedEmotions, onEmotionsChang
     );
 };
 
-const Todays = ({ diaryText }) => {
-    const [analyzedEmotions, setAnalyzedEmotions] = useState([]);
+const Todays = ({ diaryText, selectedDate, savingState, setSavingState }) => {
+    const { analyzedEmotions, musicRecommendations, selectedMusicId, isSaving } = savingState;
+
     const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [token, setToken] = useState(null);
-    const [musicRecommendations, setMusicRecommendations] = useState({});
-    const [selectedMusicId, setSelectedMusicId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loadingStates, setLoadingStates] = useState({});
 
@@ -134,7 +132,10 @@ const Todays = ({ diaryText }) => {
             console.log('감정 분석 결과:', emotionResult);
 
             const detectedEmotions = emotionResult.match(/[가-힣]+/g) || [];
-            setAnalyzedEmotions(detectedEmotions.filter(emotion => emotions[emotion]).slice(0, 3));
+            setSavingState(prev => ({
+                ...prev,
+                analyzedEmotions: detectedEmotions.filter(emotion => emotions[emotion]).slice(0, 3)
+            }));
             
         } catch (error) {
             console.error('감정 분석 중 오류가 발생했습니다:', error);
@@ -156,14 +157,17 @@ const Todays = ({ diaryText }) => {
                 body: 'grant_type=client_credentials'
             });
             const data = await response.json();
-            setToken(data.access_token);
+            setSavingState(prev => ({
+                ...prev,
+                token: data.access_token
+            }));
         };
         getSpotifyToken();
     }, []);
 
     useEffect(() => {
         const getMusicRecommendations = async (emotion, retryCount = 0) => {
-            if (!token || !emotions[emotion]) return;
+            if (!savingState.token || !emotions[emotion]) return;
 
             setLoadingStates(prev => ({
                 ...prev,
@@ -185,7 +189,7 @@ const Todays = ({ diaryText }) => {
                     'https://api.spotify.com/v1/recommendations?' + new URLSearchParams(params),
                     {
                         headers: {
-                            'Authorization': `Bearer ${token}`,
+                            'Authorization': `Bearer ${savingState.token}`,
                             'Content-Type': 'application/json'
                         }
                     }
@@ -212,14 +216,13 @@ const Todays = ({ diaryText }) => {
                 const data = await response.json();
                 if (data.tracks && data.tracks[0]) {
                     console.log(`음악 추천 데이터 (${emotion}):`, data.tracks[0]);
-                    setMusicRecommendations(prev => {
-                        const newState = {
-                            ...prev,
+                    setSavingState(prev => ({
+                        ...prev,
+                        musicRecommendations: {
+                            ...prev.musicRecommendations,
                             [emotion]: data.tracks[0]
-                        };
-                        console.log('업데이트된 musicRecommendations:', newState);
-                        return newState;
-                    });
+                        }
+                    }));
                 }
             } catch (error) {
                 console.error('음악 추천 중 오류:', error);
@@ -247,10 +250,10 @@ const Todays = ({ diaryText }) => {
             }
         };
 
-        if (analyzedEmotions.length > 0 && token) {
+        if (analyzedEmotions.length > 0 && savingState.token) {
             fetchAllRecommendations();
         }
-    }, [analyzedEmotions, token]);
+    }, [analyzedEmotions, savingState.token]);
 
     // 전체 musicRecommendations 상태 변화 확인을 위한 useEffect 추가
     useEffect(() => {
@@ -259,12 +262,18 @@ const Todays = ({ diaryText }) => {
 
     useEffect(() => {
         if (analyzedEmotions.length > 0 && musicRecommendations[analyzedEmotions[0]]) {
-            setSelectedMusicId(musicRecommendations[analyzedEmotions[0]].id);
+            setSavingState(prev => ({
+                ...prev,
+                selectedMusicId: musicRecommendations[analyzedEmotions[0]].id
+            }));
         }
     }, [analyzedEmotions, musicRecommendations]);
 
     const handleEmotionsChange = (newEmotions) => {
-        setAnalyzedEmotions(newEmotions);
+        setSavingState(prev => ({
+            ...prev,
+            analyzedEmotions: newEmotions
+        }));
     };
 
     return (
@@ -321,7 +330,10 @@ const Todays = ({ diaryText }) => {
                                         <MusicItem 
                                             track={musicRecommendations[emotion]}
                                             isSelected={selectedMusicId === musicRecommendations[emotion].id}
-                                            onSelect={() => setSelectedMusicId(musicRecommendations[emotion].id)}
+                                            onSelect={() => setSavingState(prev => ({
+                                                ...prev,
+                                                selectedMusicId: musicRecommendations[emotion].id
+                                            }))}
                                         />
                                     )}
                                 </div>
@@ -346,16 +358,78 @@ const Todays = ({ diaryText }) => {
 
 function EmotionMusicPage() {
     const location = useLocation();
+    const navigate = useNavigate();
     const { diaryText, selectedDate } = location.state || {};
+    const [savingState, setSavingState] = useState({
+        isSaving: false,
+        analyzedEmotions: [],
+        selectedMusicId: null,
+        musicRecommendations: {}
+    });
+
+    const handleComplete = async () => {
+        if (!savingState.selectedMusicId) {
+            alert('음악을 선택해주세요!');
+            return;
+        }
+
+        setSavingState(prev => ({ ...prev, isSaving: true }));
+        const nickname = localStorage.getItem('userNickname');
+
+        // 선택된 음악 기
+        const selectedEmotion = savingState.analyzedEmotions.find(emotion => 
+            savingState.musicRecommendations[emotion]?.id === savingState.selectedMusicId
+        );
+        const selectedMusic = savingState.musicRecommendations[selectedEmotion];
+
+        // 날짜 형식 변환 (YYYY-MM-DD)
+        const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+
+        const diaryData = {
+            nickname,
+            content: diaryText,
+            createDate: formattedDate,
+            musicList: [{
+                title: selectedMusic.name,
+                artist: selectedMusic.artists[0].name,
+                previewUrl: selectedMusic.preview_url || "",  // null인 경우 빈 문자열로
+                imagePath: selectedMusic.album.images[0].url,
+                emotionType: selectedEmotion
+            }],
+            emotionTypes: savingState.analyzedEmotions
+        };
+
+        try {
+            console.log('Sending diary data:', diaryData); // 요청 데이터 확인
+            const response = await axios.post('https://junyeongan.store/api/diary/create', diaryData);
+            if (response.status === 200) {
+                navigate('/calendar');
+            }
+        } catch (error) {
+            console.error('일기 저장 중 오류:', error);
+            console.error('에러 응답:', error.response?.data); // 서버 에러 응답 확인
+            alert('일기 저장에 실패했습니다.');
+        } finally {
+            setSavingState(prev => ({ ...prev, isSaving: false }));
+        }
+    };
 
     return (
         <div className="emotion-music-page">
-            <Header/>
+            <Header 
+                diaryText={diaryText} 
+                selectedDate={selectedDate}
+                onComplete={handleComplete}
+            />
             <DiaryContent diaryText={diaryText}/>
-            <Todays diaryText={diaryText} />
-
+            <Todays 
+                diaryText={diaryText} 
+                selectedDate={selectedDate}
+                savingState={savingState}
+                setSavingState={setSavingState}
+            />
         </div>
-    )
+    );
 }
 
 export default EmotionMusicPage
