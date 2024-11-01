@@ -6,6 +6,8 @@ import emotions from '../../assets/emotions.json';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MusicItem from '../../components/Music/MusicItem';
 import "./EmotionMusicPage.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DiaryContent = ({ diaryText }) => {
     return (
@@ -45,7 +47,7 @@ const EmotionSelectModal = ({ isOpen, onClose, selectedEmotions, onEmotionsChang
 
     const handleEmotionToggle = (emotion) => {
         if (tempEmotions.includes(emotion)) {
-            // 이미 선택된 감정이면 제거
+            // 이미 선택된 정이면 제거
             setTempEmotions(tempEmotions.filter(e => e !== emotion));
         } else if (tempEmotions.length < 5) {
             // 선택되지 않은 감정이고 5개 미만이면 추가
@@ -114,7 +116,7 @@ const Todays = ({ diaryText, selectedDate, savingState, setSavingState }) => {
                     messages: [
                         {
                             role: 'user',
-                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 3가지를 골라 출력해줘 "${text}"`,
+                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 중복되는 감정 없이 3가지를 골라 출력해줘 "${text}"`,
                         }
                     ],
                     max_tokens: 150,
@@ -369,46 +371,71 @@ function EmotionMusicPage() {
 
     const handleComplete = async () => {
         if (!savingState.selectedMusicId) {
-            alert('음악을 선택해주세요!');
+            toast.error('음악을 선택해주세요!');
             return;
         }
 
         setSavingState(prev => ({ ...prev, isSaving: true }));
-        const nickname = localStorage.getItem('userNickname');
 
-        // 선택된 음악 기
-        const selectedEmotion = savingState.analyzedEmotions.find(emotion => 
-            savingState.musicRecommendations[emotion]?.id === savingState.selectedMusicId
-        );
-        const selectedMusic = savingState.musicRecommendations[selectedEmotion];
+        // 데이터 유효성 검사
+        if (!localStorage.getItem('userNickname')) {
+            toast.error('사용자 정보가 없습니다.');
+            return;
+        }
 
-        // 날짜 형식 변환 (YYYY-MM-DD)
-        const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+        // 선택된 음악 ID로 실제 선택된 음악 찾기
+        let selectedMusic = null;
+        let selectedEmotion = null;
+
+        // 모든 감정의 음악들을 확인하여 선택된 음악 찾기
+        for (const emotion of savingState.analyzedEmotions) {
+            const music = savingState.musicRecommendations[emotion];
+            if (music && music.id === savingState.selectedMusicId) {
+                selectedMusic = music;
+                selectedEmotion = emotion;
+                break;
+            }
+        }
+
+        if (!selectedMusic || !selectedEmotion) {
+            toast.error('선택된 음악 정보를 찾을 수 없습니다.');
+            return;
+        }
 
         const diaryData = {
-            nickname,
-            content: diaryText,
-            createDate: formattedDate,
+            nickname: localStorage.getItem('userNickname'),
+            content: diaryText.trim(),
+            createDate: selectedDate,
             musicList: [{
                 title: selectedMusic.name,
                 artist: selectedMusic.artists[0].name,
-                previewUrl: selectedMusic.preview_url || "",  // null인 경우 빈 문자열로
+                previewUrl: selectedMusic.preview_url,
                 imagePath: selectedMusic.album.images[0].url,
                 emotionType: selectedEmotion
             }],
             emotionTypes: savingState.analyzedEmotions
         };
 
+        console.log('전송할 데이터:', diaryData);
+
         try {
-            console.log('Sending diary data:', diaryData); // 요청 데이터 확인
-            const response = await axios.post('https://junyeongan.store/api/diary/create', diaryData);
+            const response = await axios.post('https://junyeongan.store/api/diary/create', diaryData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
             if (response.status === 200) {
-                navigate('/calendar');
+                toast.success('일기가 성공적으로 저장되었습니다!', {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    onClose: () => navigate('/calendar')
+                });
             }
         } catch (error) {
             console.error('일기 저장 중 오류:', error);
-            console.error('에러 응답:', error.response?.data); // 서버 에러 응답 확인
-            alert('일기 저장에 실패했습니다.');
+            console.error('에러 응답:', error.response?.data);
+            toast.error(error.response?.data?.message || '일기 저장에 실패했습니다.');
         } finally {
             setSavingState(prev => ({ ...prev, isSaving: false }));
         }
@@ -428,6 +455,7 @@ function EmotionMusicPage() {
                 savingState={savingState}
                 setSavingState={setSavingState}
             />
+            <ToastContainer />
         </div>
     );
 }

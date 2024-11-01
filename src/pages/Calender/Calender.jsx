@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Calender.css';
 import Calendar from "react-calendar";
@@ -7,20 +7,34 @@ import "react-calendar/dist/Calendar.css";
 import { IoIosSearch } from "react-icons/io";
 import playbutton from '../../assets/playbutton.png';
 import DiarySection from '../../components/DiarySection/DiarySection';
-import { diaryData } from '../../dummyData/diaryData';
+import axios from 'axios';
 
 const Calender = () => {
     const navigate = useNavigate();
     const [value, onChange] = useState(new Date());
     const [activeDate, setActiveDate] = useState(null);
-    // 로컬 스토리지에서 닉네임 가져오기
+    const [diaryEntries, setDiaryEntries] = useState([]);
     const userNickname = localStorage.getItem('userNickname') || '게스트';
 
-    // 실제 일기 데이터가 있는 날짜 확인
+    // API에서 일기 데이터 가져오기
+    useEffect(() => {
+        const fetchDiaries = async () => {
+            try {
+                const response = await axios.get(`https://junyeongan.store/api/diary?userNickname=${userNickname}`);
+                setDiaryEntries(response.data);
+            } catch (error) {
+                console.error('일기 데이터 불러오기 실패:', error);
+            }
+        };
+
+        fetchDiaries();
+    }, [userNickname]);
+
+    // 일기 데이터가 있는 날짜 확인
     const hasSchedule = (date) => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
-        return diaryData.some(diary => 
-            moment(diary.createAt).format("YYYY-MM-DD") === formattedDate
+        return diaryEntries.some(diary => 
+            moment(diary.createDate).format("YYYY-MM-DD") === formattedDate
         );
     };
 
@@ -32,8 +46,8 @@ const Calender = () => {
     // 선택된 날짜의 일기 데이터 찾기
     const getSelectedDayDiaries = () => {
         const formattedValue = moment(value).format("YYYY-MM-DD");
-        return diaryData.filter(diary => 
-            moment(diary.createAt).format("YYYY-MM-DD") === formattedValue
+        return diaryEntries.filter(diary => 
+            moment(diary.createDate).format("YYYY-MM-DD") === formattedValue
         );
     };
 
@@ -89,7 +103,12 @@ const Calender = () => {
                             key={index}
                             value={value} 
                             playbutton={playbutton}
-                            diaryData={diary}
+                            diaryData={{
+                                content: diary.content,
+                                createAt: diary.createDate,
+                                emotions: diary.emotionTypes,
+                                music: diary.musicList[0] // 첫 번째 음악 정보 사용
+                            }}
                         />
                     ))
                 ) : (
