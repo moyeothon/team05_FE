@@ -13,6 +13,8 @@ const Calender = () => {
     const navigate = useNavigate();
     const [value, onChange] = useState(new Date());
     const [activeDate, setActiveDate] = useState(null);
+    // 로컬 스토리지에서 닉네임 가져오기
+    const userNickname = localStorage.getItem('userNickname') || '게스트';
 
     // 실제 일기 데이터가 있는 날짜 확인
     const hasSchedule = (date) => {
@@ -58,7 +60,7 @@ const Calender = () => {
                         <IoIosSearch />
                     </button>
                 </div>
-                <div className='hello-text'>장재혁님, 오늘의 감정을 음악과 함께 담아보세요!</div>
+                <div className='hello-text'>{userNickname}님, 오늘의 감정을 음악과 함께 담아보세요!</div>
                 <div className='calendar-section'>
                     <Calendar 
                         onChange={onChange} 

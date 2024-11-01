@@ -19,7 +19,6 @@ const Search = () => {
   return (
     <div className='search-container'>
       <div className='input-part'>
-        <div className='back-Arrow'></div>
         <div className="input-container">
             <CiSearch className="search-icon" />
             <input 
