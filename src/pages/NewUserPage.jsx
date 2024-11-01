@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import './UserPage.css';
-import axios from 'axios';
 
 const NewUserPage = () => {
   const [nickname, setNickname] = useState('');
