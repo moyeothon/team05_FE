@@ -11,13 +11,13 @@ const DiarySection = ({ value, playbutton, diaryData }) => {
         navigate('/diary-detail', {
             state: {
                 diaryText: diaryData.content,
-                emotions: diaryData.feelings,
+                emotions: diaryData.emotions,
                 musicData: {
-                    song: diaryData.song,
-                    artist: diaryData.artist,
-                    image: diaryData.image,
-                    preview: diaryData.preview,
-                    external_urls: diaryData.external_urls
+                    song: diaryData.music.title,
+                    artist: diaryData.music.artist,
+                    image: diaryData.music.imagePath,
+                    preview: diaryData.music.previewUrl,
+                    external_urls: diaryData.music.external_urls
                 },
                 date: diaryData.createAt
             }
@@ -27,8 +27,8 @@ const DiarySection = ({ value, playbutton, diaryData }) => {
     return (
         <div className='diary-section' onClick={handleClick}>
             <div className="emotion-tags-2">
-                {diaryData.feelings.map((feeling, index) => (
-                    <span key={index} className="emotion-tag-2">#{feeling}</span>
+                {diaryData.emotions && diaryData.emotions.map((emotion, index) => (
+                    <span key={index} className="emotion-tag-2">#{emotion}</span>
                 ))}
             </div>
 
@@ -36,18 +36,20 @@ const DiarySection = ({ value, playbutton, diaryData }) => {
                 <p>{diaryData.content}</p>
             </div>
 
-            <MusicItem 
-                track={{
-                    image: diaryData.image,
-                    name: diaryData.song,
-                    artist: diaryData.artist,
-                    preview_url: diaryData.preview,
-                    external_urls: diaryData.external_urls
-                }}
-                onSelect={(e) => {
-                    e.stopPropagation();
-                }}
-            />
+            {diaryData.music && (
+                <MusicItem 
+                    track={{
+                        image: diaryData.music.imagePath,
+                        name: diaryData.music.title,
+                        artist: diaryData.music.artist,
+                        preview_url: diaryData.music.previewUrl,
+                        external_urls: diaryData.music.external_urls
+                    }}
+                    onSelect={(e) => {
+                        e.stopPropagation();
+                    }}
+                />
+            )}
 
             <div className='diary-date'>
                 {moment(diaryData.createAt).format("YYYY년 MM월 DD일")}
