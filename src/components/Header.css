@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   border-bottom: 1px solid #e5e5e5;
-  padding: 10px 0;
+  padding: 16px 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -19,8 +19,8 @@
 
 .header-left {
   position: absolute;
-  left: 52%;
-  transform: translateX(-48%);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .header-right {
@@ -36,6 +36,17 @@
 }
 
 .header-right .next {
+  font-size: 17px;
+  color: #3C3C4399;
+  cursor: pointer;
+}
+
+.header-back {
+  position: absolute;
+  left: 16px;
+}
+
+.header-back .back {
   font-size: 17px;
   color: #3C3C4399;
   cursor: pointer;
@@ -59,6 +70,10 @@
   .header-right .next {
     font-size: 17px;
   }
+  
+  .header-back .back {
+    font-size: 17px;
+  }
 }
 
 /* 아주 작은 화면 설정 */
@@ -72,6 +87,10 @@
   }
   
   .header-right .next {
+    font-size: 12px;
+  }
+  
+  .header-back .back {
     font-size: 12px;
   }
 }

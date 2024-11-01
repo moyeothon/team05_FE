@@ -46,28 +46,6 @@
   margin-left: 12px;
 }
 
-.tags {
-  display: flex;
-  gap: 10px;
-  margin-top: -15px;
-  padding-bottom: 10px;
-  box-shadow: 0px 4px 6px #00000026;
-}
-
-.emotion-tag {
-  padding: 5px 10px;
-  background-color: white;
-  border-radius: 100px;
-  border: 1px solid #F47220;
-  cursor: pointer;
-  color: #F47220;
-  height: 15px;
-  width: 35px;
-  text-align: center;
-  font-size: 12px;
-  box-shadow: 0px 4px 6px #00000026;
-}
-
 
 .music-part{
   box-sizing: border-box;
@@ -146,7 +124,13 @@
   transform: translateX(-50%) translateY(-2px);
 }
 
-
+.hello-text{
+  color: #F47220;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
 /* ----------------------------------------------- */
 
 .calendar-part{
@@ -159,7 +143,7 @@
 .react-calendar {
     width: 100%;
     max-width: 400px;
-    border: none !important;;
+    border: none !important;
     background: white;
     font-family: 'SUIT Variable', sans-serif;
     padding: 20px;
@@ -211,10 +195,17 @@
     padding: 8px;
 }
 
-/* 주말 색상 */
+/* 주말 색상 제거 - 기본 글자색으로 통일 */
+.react-calendar__month-view__days__day--weekend,
 .react-calendar__month-view__days__day--weekend:last-child,
 .react-calendar__month-view__days__day--weekend:nth-child(7n + 1) {
-    color: #FF0000;
+    color: #3C3C43 !important;  /* 기본 글자색으로 설정 */
+}
+
+/* 토요일, 일요일 모두 기본 색상으로 */
+.calendar-tile.saturday,
+.calendar-tile.sunday {
+    color: #3C3C43 !important;
 }
 
 /* 날짜 타일 기본 스타일 */
@@ -222,7 +213,7 @@
     background: none;
     border: none;
     padding: 10px;
-    font-size: 18px;
+    font-size: 18px !important;
     font-weight: bold;
     color: #3C3C43;
     display: flex;
@@ -231,23 +222,48 @@
     position: relative;
 }
 
+/* 주말 날짜도 동일한 크기 적용 */
+.react-calendar__month-view__days__day--weekend,
+.calendar-tile.saturday,
+.calendar-tile.sunday {
+    font-size: 18px !important;  /* 원하는 크기로 조절하세요 */
+}
+
 /* 이전/다음 달 날짜 숨기기 */
 .react-calendar__month-view__days__day--neighboringMonth {
     visibility: hidden;
 }
 
-/* 오늘 날짜 스타일 */
+/* 오늘 날짜 스타일 - 기본 텍스트만 표시 */
 .react-calendar__tile--now {
+    background: transparent !important;
+    color: #3C3C43 !important;
+    font-weight: bold;
+}
+
+/* 선택된 날짜 스타일 - 주황색 원으로 표시 */
+.react-calendar__tile--active,
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
     background: #F47220 !important;
     color: white !important;
     border-radius: 100px;
+    position: relative;
 }
 
-/* 선택된 날짜 스타일 */
-.react-calendar__tile--active {
-    background: #4A90E2 !important;
-    color: white;
+.react-calendar__tile--active::after,
+.react-calendar__tile--active:enabled:hover::after,
+.react-calendar__tile--active:enabled:focus::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border: 2px solid #F47220;
     border-radius: 100px;
+    z-index: 0;
 }
 
 /* 날짜 아래 점 표시 */
@@ -263,15 +279,25 @@
 }
 
 /* hover 효과 */
-.react-calendar__tile:enabled:hover {
-    background-color: #3C3C43;
-    color: white;
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: #F47220 !important;
+    color: white !important;
     border-radius: 100px;
 }
 
-/* 주말 색상 */
-.react-calendar__month-view__days__day--weekend {
-    color: #3C3C43;
+.react-calendar__tile:enabled:hover::after,
+.react-calendar__tile:enabled:focus::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border: 2px solid #F47220;
+    border-radius: 100px;
+    z-index: 0;
 }
 
 .calendar-container {
@@ -297,13 +323,20 @@
     justify-content: center;
     align-items: center;
     padding: 0 20px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1000;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-header h2 {
     font-size: 18px;
     font-weight: 600;
-    color: #333;
+    color: #F47220;
 }
 
 .search-button {
@@ -321,4 +354,37 @@
     padding: 0 20px;
     display: flex;
     justify-content: center;
+}
+
+/* 연도 이동 버튼 숨기기 */
+.react-calendar__navigation__next2-button,
+.react-calendar__navigation__prev2-button {
+    display: none !important;
+}
+
+.no-diary-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.no-diary-message:hover {
+    background-color: #f8f8f8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-diary-message .go-to-write {
+    color: #F47220;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: 500;
 }
