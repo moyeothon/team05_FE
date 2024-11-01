@@ -46,29 +46,6 @@
   margin-left: 12px;
 }
 
-.tags {
-  display: flex;
-  gap: 10px;
-  margin-top: -15px;
-  padding-bottom: 10px;
-  box-shadow: 0px 4px 6px #00000026;
-  
-}
-
-.emotion-tag {
-  padding: 5px 10px;
-  background-color: white;
-  border-radius: 100px;
-  border: 1px solid #F47220;
-  cursor: pointer;
-  color: #F47220;
-  height: 15px;
-  width: 35px;
-  text-align: center;
-  font-size: 12px;
-  box-shadow: 0px 4px 6px #00000026;
-}
-
 
 .music-part{
   box-sizing: border-box;
@@ -378,4 +355,31 @@
 .react-calendar__navigation__next2-button,
 .react-calendar__navigation__prev2-button {
     display: none !important;
+}
+
+.no-diary-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.no-diary-message:hover {
+    background-color: #f8f8f8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-diary-message .go-to-write {
+    color: #F47220;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: 500;
 }

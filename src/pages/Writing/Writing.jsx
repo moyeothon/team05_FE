@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Writing.css';
 import Header from '../../components/Header';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 const Writing = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const selectedDate = location.state?.selectedDate || moment().format("YYYY-MM-DD");
   const [diaryText, setDiaryText] = useState('');
 
   const validateDiary = () => {
@@ -24,15 +29,29 @@ const Writing = () => {
 
   const handleNext = () => {
     if (validateDiary()) {
-      // 다음 페이지로 이동하는 로직
+      navigate('/emotion', {
+        state: { 
+          diaryText, 
+          selectedDate 
+        }
+      });
+      return true;
     }
+    return false;
   };
 
   return ( 
     <div className='writing-page'>
-      <Header diaryText={diaryText} onNext={handleNext}/>
+      <Header 
+        diaryText={diaryText} 
+        selectedDate={selectedDate} 
+        onNext={handleNext}
+      />
       <div className="writing-content-background">
         <div className="writing-content-box">
+          <div className="selected-date">
+            {moment(selectedDate).format("YYYY년 MM월 DD일")}
+          </div>
           <textarea 
             className='input-part'
             placeholder='오늘 하루는 어땠나요?'

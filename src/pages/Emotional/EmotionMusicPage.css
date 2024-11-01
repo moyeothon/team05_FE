@@ -174,19 +174,20 @@ body {
 }
 
 .emotion-tag {
-    padding: 10px 12px;
+    padding: 6px 12px; 
     background-color: #ffffff;
     border-radius: 16px;
     border: 1px solid #F47220;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #F47220;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     width: fit-content;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     line-height: 1;
-    height: 28px;
+    white-space: nowrap;
 }
 
 .music-item {
@@ -473,4 +474,27 @@ body {
     padding: 20px;
     overflow-y: auto;
     flex: 1;
+}
+
+.loading-music {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 10px 0;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.6;
+    }
 }

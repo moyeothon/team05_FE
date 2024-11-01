@@ -2,20 +2,26 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ diaryText, onNext }) => {
+const Header = ({ diaryText, selectedDate, onNext }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleNext = () => {
     if (location.pathname === '/writing') {
       if (onNext()) {
-        navigate('/emotion', { state: { diaryText } });
+        navigate('/emotion', { state: { diaryText, selectedDate } });
       }
     }
   };
 
   const handleBack = () => {
-    navigate(-1);
+    if (location.pathname === '/emotion') {
+      navigate('/writing', { 
+        state: { selectedDate }
+      });
+    } else if(location.pathname === '/writing'){
+      navigate('/calendar');
+    }
   };
 
   return (
@@ -25,7 +31,7 @@ const Header = ({ diaryText, onNext }) => {
           <span className="back" onClick={handleBack}>뒤로</span>
         </div>
         <div className="header-left">
-          <span className="date">10월 29일 화요일</span>
+          <span className="date">일기 쓰기</span>
         </div>
         <div className="header-right">
           {location.pathname === '/writing' && (

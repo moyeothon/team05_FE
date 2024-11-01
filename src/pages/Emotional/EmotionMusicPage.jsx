@@ -196,6 +196,7 @@ const Todays = ({ diaryText }) => {
     const [musicRecommendations, setMusicRecommendations] = useState({});
     const [selectedMusicId, setSelectedMusicId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loadingStates, setLoadingStates] = useState({});
 
     const analyzeDiary = async (text) => {
         setIsAnalyzing(true);
@@ -209,7 +210,7 @@ const Todays = ({ diaryText }) => {
                     messages: [
                         {
                             role: 'user',
-                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 3가지를 골라 ��력해줘 "${text}"`,
+                            content: `이 일기의 감정을 분석하여 기쁨,감사,만족,사랑,뿌듯함,활력,여유,기대감,슬픔,외로움,아쉬움,후회,불안,피로,실망,서운함,혼란,놀람,고민,설렘,부담,의심,두려움,위안 중 3가지를 골라 출력해줘 "${text}"`,
                         }
                     ],
                     max_tokens: 150,
@@ -258,6 +259,11 @@ const Todays = ({ diaryText }) => {
         const getMusicRecommendations = async (emotion, retryCount = 0) => {
             if (!token || !emotions[emotion]) return;
 
+            setLoadingStates(prev => ({
+                ...prev,
+                [emotion]: true
+            }));
+            
             const params = {
                 seed_artists: '3HqSLMAZ3g3d5poNaI7GOU,6HvZYsbFfjnjFrWF950C9d,7n2Ycct7Beij7Dj7meI4X0,2YXlV7PEHYKlF0sxiHiLgE',
                 market: 'KR',
@@ -310,6 +316,11 @@ const Todays = ({ diaryText }) => {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     return getMusicRecommendations(emotion, retryCount + 1);
                 }
+            } finally {
+                setLoadingStates(prev => ({
+                    ...prev,
+                    [emotion]: false
+                }));
             }
         };
 
@@ -384,13 +395,18 @@ const Todays = ({ diaryText }) => {
                             {analyzedEmotions.map((emotion, index) => (
                                 <div key={index} className="music-recommendation-group">
                                     <span className="emotion-tag">#{emotion}</span>
-                                    {musicRecommendations[emotion] && 
+                                    {loadingStates[emotion] ? (
+                                        <div className="loading-music">
+                                            음악 추천 중...
+                                        </div>
+                                    ) : (
+                                        musicRecommendations[emotion] && 
                                         <MusicItem 
                                             track={musicRecommendations[emotion]}
                                             isSelected={selectedMusicId === musicRecommendations[emotion].id}
                                             onSelect={() => setSelectedMusicId(musicRecommendations[emotion].id)}
                                         />
-                                    }
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -413,9 +429,7 @@ const Todays = ({ diaryText }) => {
 
 function EmotionMusicPage() {
     const location = useLocation();
-    const [diaryText, setDiaryText] = useState(
-        location.state?.diaryText || `오늘은 아침부터...` // 기본 텍스트는 fallback으로 사용
-    );
+    const { diaryText, selectedDate } = location.state || {};
 
     return (
         <div className="emotion-music-page">
