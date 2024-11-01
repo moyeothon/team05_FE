@@ -3,114 +3,21 @@ import Header from "../../components/Header"
 import AIBtn from "../../components/Emotional/AIBtn"
 import axios from 'axios';
 import emotions from '../../assets/emotions.json';
-
+import { useLocation } from 'react-router-dom';
+import MusicItem from '../../components/Music/MusicItem';
 import "./EmotionMusicPage.css"
 
 const DiaryContent = ({ diaryText }) => {
     return (
         <div className="diary-content-background">
             <div className="diary-content-box">
-                <div className="diary-content">
+                <div className="diary-emotion-content">
                     <p>{diaryText}</p>
                 </div>
             </div>
         </div>
     )
 }
-
-const MusicItem = ({ track, isSelected, onSelect }) => {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [showOptions, setShowOptions] = useState(false);
-    const audioRef = useRef(null);
-    const optionsRef = useRef(null);
-
-    const togglePlay = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
-            } else {
-                audioRef.current.play();
-            }
-            setIsPlaying(!isPlaying);
-        }
-    };
-
-    // 오디오 재생이 끝났을 때 상태 업데이트
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.onended = () => setIsPlaying(false);
-        }
-    }, []);
-
-    // 외부 클릭 감지를 위한 useEffect
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-                setShowOptions(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    return (
-        <div 
-            className={`music-item ${isSelected ? 'selected' : ''}`}
-            onClick={onSelect}
-        >
-            <div className="music-info">
-                <img 
-                    src={track.album.images[0]?.url} 
-                    alt="앨범 커버" 
-                    className="album-cover"
-                />
-                <div className="song-details">
-                    <h3 className="song-title">{track.name}</h3>
-                    <p className="artist-name">{track.artists.map(artist => artist.name).join(', ')}</p>
-                </div>
-            </div>
-            <div className="music-controls">
-                {track.preview_url && (
-                    <button className="play-button" onClick={togglePlay}>
-                        <audio ref={audioRef} src={track.preview_url} />
-                        <img 
-                            src={isPlaying ? "/pause_icon.svg" : "/play_icon.svg"} 
-                            alt={isPlaying ? "일시정지" : "재생"} 
-                        />
-                    </button>
-                )}
-                <div className="options-container" ref={optionsRef}>
-                    <button 
-                        className="options-button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setShowOptions(!showOptions);
-                        }}
-                    >
-                        <img src="/more_options.svg" alt="더보기" />
-                    </button>
-                    {showOptions && (
-                        <div className="options-popup">
-                            <button 
-                                className="option-item spotify-link"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    window.open(track.external_urls.spotify, '_blank'); // 스포티파이 링크 열기
-                                    setShowOptions(false);
-                                }}
-                            >
-                                스포티파이에서 듣기
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-};
 
 const EmotionSelectModal = ({ isOpen, onClose, selectedEmotions, onEmotionsChange }) => {
     const emotionGroups = [
@@ -195,6 +102,7 @@ const Todays = ({ diaryText }) => {
     const [musicRecommendations, setMusicRecommendations] = useState({});
     const [selectedMusicId, setSelectedMusicId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loadingStates, setLoadingStates] = useState({});
 
     const analyzeDiary = async (text) => {
         setIsAnalyzing(true);
@@ -257,6 +165,11 @@ const Todays = ({ diaryText }) => {
         const getMusicRecommendations = async (emotion, retryCount = 0) => {
             if (!token || !emotions[emotion]) return;
 
+            setLoadingStates(prev => ({
+                ...prev,
+                [emotion]: true
+            }));
+            
             const params = {
                 seed_artists: '3HqSLMAZ3g3d5poNaI7GOU,6HvZYsbFfjnjFrWF950C9d,7n2Ycct7Beij7Dj7meI4X0,2YXlV7PEHYKlF0sxiHiLgE',
                 market: 'KR',
@@ -298,10 +211,15 @@ const Todays = ({ diaryText }) => {
 
                 const data = await response.json();
                 if (data.tracks && data.tracks[0]) {
-                    setMusicRecommendations(prev => ({
-                        ...prev,
-                        [emotion]: data.tracks[0]
-                    }));
+                    console.log(`음악 추천 데이터 (${emotion}):`, data.tracks[0]);
+                    setMusicRecommendations(prev => {
+                        const newState = {
+                            ...prev,
+                            [emotion]: data.tracks[0]
+                        };
+                        console.log('업데이트된 musicRecommendations:', newState);
+                        return newState;
+                    });
                 }
             } catch (error) {
                 console.error('음악 추천 중 오류:', error);
@@ -309,6 +227,11 @@ const Todays = ({ diaryText }) => {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     return getMusicRecommendations(emotion, retryCount + 1);
                 }
+            } finally {
+                setLoadingStates(prev => ({
+                    ...prev,
+                    [emotion]: false
+                }));
             }
         };
 
@@ -328,6 +251,11 @@ const Todays = ({ diaryText }) => {
             fetchAllRecommendations();
         }
     }, [analyzedEmotions, token]);
+
+    // 전체 musicRecommendations 상태 변화 확인을 위한 useEffect 추가
+    useEffect(() => {
+        console.log('현재 musicRecommendations 상태:', musicRecommendations);
+    }, [musicRecommendations]);
 
     useEffect(() => {
         if (analyzedEmotions.length > 0 && musicRecommendations[analyzedEmotions[0]]) {
@@ -383,13 +311,19 @@ const Todays = ({ diaryText }) => {
                             {analyzedEmotions.map((emotion, index) => (
                                 <div key={index} className="music-recommendation-group">
                                     <span className="emotion-tag">#{emotion}</span>
-                                    {musicRecommendations[emotion] && 
+                                    {loadingStates[emotion] ? (
+                                        <div className="loading-music">
+                                            <div className="loading-spinner"></div>
+                                            <p className="loading-text">음악 추천 중...</p>
+                                        </div>
+                                    ) : (
+                                        musicRecommendations[emotion] && 
                                         <MusicItem 
                                             track={musicRecommendations[emotion]}
                                             isSelected={selectedMusicId === musicRecommendations[emotion].id}
                                             onSelect={() => setSelectedMusicId(musicRecommendations[emotion].id)}
                                         />
-                                    }
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -411,9 +345,8 @@ const Todays = ({ diaryText }) => {
 }
 
 function EmotionMusicPage() {
-
-    const [diaryText, setDiaryText] = useState(`오늘은 아침부터 왠지 모르게 설렘이 가득한 하루였다. 눈을 뜨자마자 창문으로 들어오는 햇살이 참 따스해서 기분이 좋아졌고, 그 느낌을 담아 하루를 시작했다. 출근길에는 좋아하는 노래를 듣고, 간간히 스쳐가는 가을 바람에 행복이 묻어나는 듯했다.
-점심때는 동료들과 한껏 웃으며 시간을 보냈다. 웃음소리가 사무실을 가득 채우는 순간들이 참 소중하다는 걸 느꼈다. 오후 내내 마음이 기쁘고 가볍게 날아다니는 기분이 들었다.`);
+    const location = useLocation();
+    const { diaryText, selectedDate } = location.state || {};
 
     return (
         <div className="emotion-music-page">

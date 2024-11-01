@@ -1,0 +1,101 @@
+.user-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.user-content {
+    width: 100%;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.user-text {
+    font-size: 22px;
+    color: #2D2D2D;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.user-text span {
+    font-weight: bold;
+    color: #F47220;
+}
+
+.nickname-form {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.nickname-input {
+    width: 100%;
+    height: 48px;
+    background: #F472201A;
+    border-radius: 10px;
+    border: 1px solid #F47220;
+    padding: 0 15px;
+    font-size: 16px;
+    color: #2D2D2D;
+}
+
+.nickname-input::placeholder {
+    color: #F47220;
+    opacity: 0.7;
+}
+
+.complete-btn {
+    width: 100%;
+    height: 48px;
+    background: #F47220;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.complete-btn:hover:not(:disabled) {
+    background: #E56615;
+    transform: translateY(-2px);
+}
+
+.complete-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.img-part-2{
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .user-text {
+        font-size: 18px;
+    }
+    
+    .nickname-form {
+        max-width: 280px;
+    }
+    
+    .nickname-input {
+        height: 44px;
+        font-size: 15px;
+    }
+    
+    .complete-btn {
+        height: 44px;
+        font-size: 15px;
+    }
+} 
