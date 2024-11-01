@@ -62,13 +62,13 @@
 
 /* ----------------------------------------------------------------- */
 
-.diary-section {
+/* .diary-section {
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin: 20px 12px;
-  }
+  } */
   
   .emotion-tags {
     display: flex;
@@ -103,7 +103,7 @@
     margin-bottom: 16px;
     text-align: left;
     display: -webkit-box;
-    -webkit-line-clamp: 9;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

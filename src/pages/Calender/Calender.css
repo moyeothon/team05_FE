@@ -99,10 +99,8 @@
   color: #3C3C4399;
   font-size: 12px;
   margin-top: 13px;
-  margin-left: 10px;
-  
+  margin-left: 10px; 
 }
-
 .plusbutton{
   position: fixed;
   bottom: 24px;
@@ -126,7 +124,7 @@
 
 .hello-text{
   color: #F47220;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
   text-align: center;
   width: 100%;
@@ -307,7 +305,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    position: relative;
 }
 
 .calendar-content {
@@ -316,6 +314,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
 }
 
 .calendar-header {
@@ -326,7 +325,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     background-color: white;
     z-index: 1000;
     height: 60px;
