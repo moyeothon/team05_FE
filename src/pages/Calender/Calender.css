@@ -124,7 +124,13 @@
   transform: translateX(-50%) translateY(-2px);
 }
 
-
+.hello-text{
+  color: #F47220;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
 /* ----------------------------------------------- */
 
 .calendar-part{
@@ -310,7 +316,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 60px;
 }
 
 .calendar-header {
@@ -331,7 +336,7 @@
 .calendar-header h2 {
     font-size: 18px;
     font-weight: 600;
-    color: #333;
+    color: #F47220;
 }
 
 .search-button {

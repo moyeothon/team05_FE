@@ -42,8 +42,8 @@ body {
     text-align: left;
 }
 
-.diary-content p {
-    font-size: 16px;
+.diary-emotion-content p {
+    font-size: 14px;
     line-height: 1.8;
     color: #333;
     margin-bottom: 16px;
@@ -474,27 +474,4 @@ body {
     padding: 20px;
     overflow-y: auto;
     flex: 1;
-}
-
-.loading-music {
-    background-color: #f8f8f8;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    margin: 10px 0;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        opacity: 0.6;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.6;
-    }
 }

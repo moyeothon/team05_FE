@@ -21,6 +21,8 @@ const Header = ({ diaryText, selectedDate, onNext }) => {
       });
     } else if(location.pathname === '/writing'){
       navigate('/calendar');
+    } else if(location.pathname === '/diary-detail'){
+      navigate('/calendar');
     }
   };
 

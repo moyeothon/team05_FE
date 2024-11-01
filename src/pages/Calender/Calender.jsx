@@ -48,12 +48,12 @@ const Calender = () => {
         <div className='calendar-container'>
             <div className='calendar-content'>
                 <div className='calendar-header'>
-                    <h2>Calendar</h2>
+                    <h2>MUTE</h2>
                     <button className='search-button'>
                         <IoIosSearch />
                     </button>
                 </div>
-
+                <div className='hello-text'>장재혁님, 오늘의 감정을 음악과 함께 담아보세요!</div>
                 <div className='calendar-section'>
                     <Calendar 
                         onChange={onChange} 

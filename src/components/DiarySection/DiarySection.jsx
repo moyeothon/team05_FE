@@ -1,10 +1,31 @@
 import React from 'react';
 import moment from 'moment';
 import './DiarySection.css';
+import { useNavigate } from 'react-router-dom';
+import MusicItem from '../Music/MusicItem';
 
 const DiarySection = ({ value, playbutton, diaryData }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/diary-detail', {
+            state: {
+                diaryText: diaryData.content,
+                emotions: diaryData.feelings,
+                musicData: {
+                    song: diaryData.song,
+                    artist: diaryData.artist,
+                    image: diaryData.image,
+                    preview: diaryData.preview,
+                    external_urls: diaryData.external_urls
+                },
+                date: diaryData.createAt
+            }
+        });
+    };
+
     return (
-        <div className='diary-section'>
+        <div className='diary-section' onClick={handleClick}>
             <div className="emotion-tags-2">
                 {diaryData.feelings.map((feeling, index) => (
                     <span key={index} className="emotion-tag-2">#{feeling}</span>
@@ -15,20 +36,18 @@ const DiarySection = ({ value, playbutton, diaryData }) => {
                 <p>{diaryData.content}</p>
             </div>
 
-            <div className='music-item'>
-                <div className='music-info'>
-                    <div className='album-cover'>
-                        <img src={diaryData.image} alt="앨범커버" />
-                    </div>
-                    <div className='song-details'>
-                        <h3 className='song-title'>{diaryData.song}</h3>
-                        <p className='artist-name'>{diaryData.artist}</p>
-                    </div>
-                </div>
-                <button className='play-button'>
-                    <img src={playbutton} alt="재생" />
-                </button>
-            </div>
+            <MusicItem 
+                track={{
+                    image: diaryData.image,
+                    name: diaryData.song,
+                    artist: diaryData.artist,
+                    preview_url: diaryData.preview,
+                    external_urls: diaryData.external_urls
+                }}
+                onSelect={(e) => {
+                    e.stopPropagation();
+                }}
+            />
 
             <div className='diary-date'>
                 {moment(diaryData.createAt).format("YYYY년 MM월 DD일")}
