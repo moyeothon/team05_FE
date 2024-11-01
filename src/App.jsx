@@ -10,6 +10,7 @@ import NewUserPage from './pages/NewUserPage';
 import ExistingUserPage from './pages/ExistingUserPage';
 import DiaryDetailPage from './pages/DiaryDetail/DiaryDetailPage';
 import Search from './pages/Search/Search';
+
 function App() {
   return (
     <BrowserRouter>

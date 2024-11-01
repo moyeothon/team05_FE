@@ -18,6 +18,7 @@
     transform: rotate(-135deg);
     margin-left: 10px;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .search-icon{

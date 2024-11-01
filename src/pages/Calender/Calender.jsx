@@ -46,7 +46,7 @@ const Calender = () => {
         });
     };
 
-    // search 페이지로 이동하는 함수 추가
+
     const handleSearchClick = () => {
         navigate('/search');
     };

@@ -19,7 +19,9 @@ const Writing = () => {
     }
 
     const lines = diaryText.trim().split('\n').filter(line => line.trim().length > 0);
-    if (lines.length <= 1) {
+    const totalCharacters = lines.join('').length;
+
+    if (lines.length < 1 || totalCharacters < 10) {
       toast.error('조금만 더 성의있는 일기를 적어주세요!');
       return false;
     }
