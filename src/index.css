@@ -1,5 +1,7 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+:root {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -71,4 +73,4 @@ button:focus-visible {
   padding: 0;
   margin: 0;
   width: 100%;
-} */
+}
