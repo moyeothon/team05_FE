@@ -91,7 +91,7 @@
   padding: 8px 8px !important; 
   background-color: #ffffff;
   border-radius: 16px;
-  border: 1px solid #F47220;
+  border: 1px solid #F47220 !important;
   font-size: 12px;
   font-weight: 400;
   color: #F47220;
