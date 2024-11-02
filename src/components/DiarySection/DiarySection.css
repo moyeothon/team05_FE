@@ -94,7 +94,7 @@
   border: 1px solid #F47220 !important;
   font-size: 12px;
   font-weight: 400;
-  color: #F47220;
+  color: #F47220 !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   width: fit-content;
   display: inline-flex;
