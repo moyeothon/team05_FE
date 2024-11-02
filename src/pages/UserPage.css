@@ -80,6 +80,15 @@
     margin-bottom: 0;
 }
 
+.img-part-2 img {
+    width: 137px;
+    height: 130px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media screen and (max-width: 480px) {
     .user-text {
         font-size: 18px;
