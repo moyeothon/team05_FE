@@ -13,10 +13,11 @@ const ExistingUserPage = () => {
     if (nickname.trim()) {
       try {
         // 사용자 조회
-        const response = await axios.get(`https://junyeongan.store/api/diary?userNickname=${nickname.trim()}`);
+        const response = await axios.post(`https://junyeongan.store/api/diary?userNickname=${nickname.trim()}`);
         
-        // 사용자 조회 성공하면 캘린더 이동
-        if (response.status === 200) {
+        // 사용자가 이미 존재하는 경우 캘린더로 이동
+        if ((response.status === 400 && 
+             response.data?.details === "MEMBER_ALREADY_EXISTS")) {
           localStorage.setItem('userNickname', nickname.trim());
           navigate('/calendar');
         }
