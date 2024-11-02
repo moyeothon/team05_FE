@@ -369,17 +369,13 @@
     line-height: 1.6;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
     margin: 20px 0;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.no-diary-message:hover {
-    background-color: #f8f8f8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 .no-diary-message .go-to-write {
     color: #F47220;

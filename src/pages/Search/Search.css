@@ -62,14 +62,6 @@
 }
 
 /* ----------------------------------------------------------------- */
-
-/* .diary-section {
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px 12px;
-  } */
   
   .emotion-tags {
     display: flex;
@@ -186,7 +178,7 @@
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
