@@ -41,6 +41,8 @@
     line-height: 1.8;
     resize: none;
     border-radius: 16px;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .input-part:focus {
