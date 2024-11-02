@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import './UserPage.css';
 
 const ExistingUserPage = () => {
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (nickname.trim()) {
-      // 여기에 닉네임 확인 및 검증 로직 추가
-      navigate('/calendar');
+      try {
+        // 사용자 조회
+        const response = await axios.get(`https://junyeongan.store/api/diary?userNickname=${nickname.trim()}`);
+        
+        // 사용자 조회 성공하면 캘린더 이동
+        if (response.status === 200) {
+          localStorage.setItem('userNickname', nickname.trim());
+          navigate('/calendar');
+        }
+      } catch (error) {
+        // 사용자 조회 실패 시
+        if (error.response?.status === 404 && 
+            error.response?.data?.details === "MEMBER_DOES_NOT_EXISTS") {
+          toast.error('존재하지 않는 닉네임입니다. 다시 확인해주세요.');
+        } else {
+          toast.error('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+      }
     }
   };
 
