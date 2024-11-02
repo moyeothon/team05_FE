@@ -12,22 +12,18 @@ const ExistingUserPage = () => {
     e.preventDefault();
     if (nickname.trim()) {
       try {
-        // 사용자 조회
-        const response = await axios.post(`https://junyeongan.store/api/diary?userNickname=${nickname.trim()}`);
+        const response = await axios.get(`https://junyeongan.store/api/member/check?nickname=${nickname.trim()}`);
         
-        // 사용자가 이미 존재하는 경우 캘린더로 이동
-        if ((response.status === 400 && 
-             response.data?.details === "MEMBER_ALREADY_EXISTS")) {
+        if (response.status === 200) {
           localStorage.setItem('userNickname', nickname.trim());
           navigate('/calendar');
         }
       } catch (error) {
-        // 사용자 조회 실패 시
-        if (error.response?.status === 404 && 
-            error.response?.data?.details === "MEMBER_DOES_NOT_EXISTS") {
-          toast.error('존재하지 않는 닉네임입니다. 다시 확인해주세요.');
+        if (error.response?.status === 400) {
+          toast.error('등록되지 않은 닉네임입니다. 다시 확인해주세요.');
         } else {
           toast.error('오류가 발생했습니다. 다시 시도해주세요.');
+          console.error('Error:', error);
         }
       }
     }
